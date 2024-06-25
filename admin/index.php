@@ -52,20 +52,20 @@
 
 
 <div class="container">
-    <div class="row">
+    <div class="row" style="font-family: 'Poppins';">
         <div class="col-lg-8 position-relative z-index-2">
             <div class="card card-plain mb-4">
                 <div class="card-body p-4">
                     <div class="row">
                         <div class="col-lg-8">
-                                <h2 class="font-weight-bold mb-0 mt-4" style="font-size: 30px">General Statistics</h2>
+                                <h4 style="font-family: 'Poppins', sans-serif; font-size: 35px;">Dashboard</h4>
                             </div>
                         </div>
                     </div>  
                 </div>
             </div>
             <div class="row">
-            <div class="col-lg-3 col-md-6 col-sm-6">
+            <div class="col-lg-3 col-md-6 col-sm-6 mb-3">
                 <div class="card mb-2">
                     <div class="card-header p-3 pt-2">
                         <div class="icon icon-lg icon-shape bg-gradient-dark shadow-dark shadow text-center border-radius-xl mt-n4 position-absolute">
@@ -83,7 +83,7 @@
                 </div>
             </div>
 
-            <div class="col-lg-3 col-md-6 col-sm-6">
+            <div class="col-lg-3 col-md-6 col-sm-6 mb-3">
                 <div class="card mb-2">
                     <div class="card-header p-3 pt-2 bg-transparent">
                         <div class="icon icon-lg icon-shape bg-gradient-primary shadow-primary shadow text-center border-radius-xl mt-n4 position-absolute">
@@ -96,12 +96,12 @@
                     </div>
                     <hr class="dark horizontal my-0">
                     <div class="card-footer p-3">
-                        <p class="mb-0"><span class="<?php echo ($percentageChange >= 0) ? 'text-success' : 'text-danger'; ?> text-sm font-weight-bolder"><?php echo $changeTxt; ?><span style="color: black;"> compared 5 hours ago</span></span></p>
+                        <p class="mb-0"><span class="<?php echo ($percentageChange >= 0) ? 'text-danger' : 'text-success'; ?> text-sm font-weight-bolder"><?php echo $changeTxt; ?><span style="color: black;"> compared 5 hrs ago</span></span></p>
                     </div>
                 </div>
             </div>
 
-                <div class="col-lg-3 col-md-6 col-sm-6">
+                <div class="col-lg-3 col-md-6 col-sm-6 mb-3">
                     <div class="card mb-2">
                         <div class="card-header p-3 pt-2 bg-transparent">
                             <div class="icon icon-lg icon-shape bg-gradient-success shadow-success text-center border-radius-xl mt-n4 position-absolute">
@@ -109,7 +109,7 @@
                             </div>
                             <div class="text-end pt-1">
                                 <p class="text-sm mb-0 text-capitalize">Today's Profit</p>
-                                <h4 class="mb-0">₱ <?php echo number_format($todayRevenue); ?></h4>
+                                <h4 class="mb-0"><span style="font-family: 'Poppins', sans-serif;">₱<?php echo number_format($todayRevenue); ?>.00</span></h4>
                             </div>
                         </div>
                         <hr class="horizontal my-0 dark">
@@ -118,11 +118,11 @@
                             // Calculate percentage change
                             if ($yesterdayRevenue != 0) {
                                 $percentageChange = (($todayRevenue - $yesterdayRevenue) / $yesterdayRevenue) * 100;
-                                $changeClass = ($percentageChange > 0) ? 'text-success' : 'text-danger';
+                                $changeClass = ($percentageChange > 0) ? 'text-danger' : 'text-success';
                                 $changeSymbol = ($percentageChange > 0) ? '+' : '';
                                 $changeText = sprintf('%s%.2f%% than yesterday', $changeSymbol, abs($percentageChange));
                             } else {
-                                $changeText = 'No data for yesterday';
+                                $changeText = 'No data yesterday';
                                 $changeClass = 'text-muted';
                             }
                             ?>
@@ -131,7 +131,7 @@
                     </div>
                 </div>
 
-                <div class="col-lg-3 col-md-6 col-sm-6">
+                <div class="col-lg-3 col-md-6 col-sm-6 mb-3">
                     <div class="card mb-2">
                         <div class="card-header p-3 pt-2 bg-transparent">
                             <div class="icon icon-lg icon-shape bg-gradient-info shadow-info text-center border-radius-xl mt-n4 position-absolute">
@@ -156,7 +156,7 @@
                     </div>
                 </div>
             </div>
-            <div id="curve_chart" style="margin-left: 40px; margin-top: 40px; margin-bottom: 20px; width: 900px; height: 500px"></div>
+            <div id="curve_chart" style="margin-left: 40px; margin-top: 20px; margin-bottom: 20px; width: 900px; height: 500px"></div>
         </div>
     </div>
 </div>

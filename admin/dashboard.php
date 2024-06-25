@@ -104,7 +104,7 @@ if ($totalDeliverYesterday != 0) {
     $percentageChange = (($totalDeliverToday - $totalDeliverYesterday) / $totalDeliverYesterday) * 100;
     $changeText = sprintf('%s%.2f%% from yesterday', ($percentageChange >= 0 ? '+' : ''), $percentageChange);
 } else {
-    $changeText = 'No data for yesterday';
+    $changeText = 'No data yesterday';
 }
 $datetimeFiveHoursAgo = date('Y-m-d H:i:s', strtotime('-5 hours'));
 

@@ -37,7 +37,7 @@
                                             <td class="d-none d-lg-table-cell">
                                                 <img src="../uploads/<?= $item['image']; ?>" width="50px" height="50px" alt="<?= $item['name']; ?>">
                                             </td>
-                                            <td class="d-none d-lg-table-cell">₱ <?= $item['additional_price']; ?></td>
+                                            <td class="d-none d-lg-table-cell"><span style="font-family: 'Poppins', sans-serif;">₱<?= $item['additional_price']; ?>.00</span></td>
                                             <td class="d-none d-lg-table-cell">
                                                 <?= $item['status'] == '0'? "Out of Stock": "Available"; ?>
                                             </td>

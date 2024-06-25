@@ -112,6 +112,7 @@
     .logOut{
       margin-top: -40px;
     }
+    
 
     .nab-link:hover {
       background-color: #89C5F1; 
@@ -194,6 +195,13 @@ table, tr,td,th{
   font-size: 500;
   background-color: #AAD7F6!important;
 }
+.BluBtn{
+  color: #013D67; 
+  font-size: 13px; 
+  font-family: 'Poppins';
+  font-size: 500;
+  background-color: #89C5F1!important;
+}
 .RedBtn{
   color: white; 
   font-size: 13px; 
@@ -235,6 +243,26 @@ table, tr,td,th{
         display: none;
     }
 }
+
+/* Style for hover effect */
+.CheckMe:hover {
+  background-color: #aad7f6;
+}
+
+/* Style for checked state */
+.CheckMe:checked {
+  background-color: #aad7f6 !important;
+  border-color: #6a6a66 !important;
+  color: #013d67 !important;
+}
+
+/* Styling the check icon */
+.CheckMe:checked::before {
+  content: "\2713"; /* Unicode for check mark */
+  color: #013d67; /* Color of the check mark */
+}
+
+
   </style>
 </head>
 

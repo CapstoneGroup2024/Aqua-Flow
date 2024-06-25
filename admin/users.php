@@ -8,7 +8,7 @@
         <div class="col-md-12">
             <div class="card mt-4">
                 <div class="card-header">
-                    <h4 style="font-family: 'Poppins', sans-serif; font-size: 35px;">Users</h4>
+                    <h4 style="font-family: 'Poppins', sans-serif; font-size: 35px;">User Details</h4>
                 </div>
                 <div class="card-body">
                     <!--------------- USERS TABLE --------------->
@@ -75,7 +75,7 @@
                                 } else {
                             ?>
                                     <tr>
-                                        <td colspan="5">No records found</td>
+                                        <td colspan="5"><br>No records found</td>
                                     </tr>
                             <?php
                                 }

@@ -2,11 +2,13 @@
   <div class="row justify-content-end">
     <div class="col-lg-auto">
       <!-- Toggle Button - Right Side -->
-      <button class="btn btn-primary d-lg-none" type="button" 
-              style="margin-right: 20px; margin-bottom: -10px;"
-              data-bs-toggle="offcanvas" data-bs-target="#offcanvasLeft" aria-controls="offcanvasLeft">
-              <i class="material-icons">grid_view</i>
-      </button>
+      <button class="btn BlueBtn d-lg-none" type="button" 
+        style="position: fixed; top: 20px; right: 20px; z-index: 1000; box-shadow: 0 4px 8px rgba(0,0,0,0.1);"
+        data-bs-toggle="offcanvas" data-bs-target="#offcanvasLeft" aria-controls="offcanvasLeft">
+        <i class="material-icons">grid_view</i>
+    </button>
+
+
     </div>
   </div>
 </div>
@@ -72,7 +74,7 @@
     </ul>
     <!-- Logout Button -->
     <div class="sidenav-footer logOut position-absolute w-90">
-        <a href="../logout.php" class="btn bg-primary mt-4 w-100 text-white">Logout</a>
+        <a href="../logout.php" class="btn bg-primary mt-4 w-100 BluBtn">Logout</a>
     </div>
   </div>
 </div>

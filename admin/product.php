@@ -8,57 +8,61 @@
         <div class="col-md-12">
             <div class="card mt-4">
                 <div class="card-header">
-                    <h4 style="font-family: 'Suez One', sans-serif; font-size: 35px;">Products</h4>
+                    <h4 style="font-family: 'Poppins', sans-serif; font-size: 35px;">Products</h4>
                 </div>
                 <div class="card-body">
                     <!--------------- PRODUCTS TABLE --------------->
-                    <table class="table table-bordered table-striped">
+                    <table class="table text-center">
                         <thead>
                             <tr>
-                                <th>ID</th>
-                                <th>Name</th>
-                                <th>Size</th>
-                                <th>Image</th>
-                                <th>Quantity</th>
-                                <th>Original Price</th>
-                                <th>Status</th>
-                                <th>Edit</th>
-                                <th>Delete</th>
+                                <th class="d-none d-lg-table-cell">ID</th>
+                                <th class="d-table-cell d-lg-table-cell">Name</th>
+                                <th class="d-none d-lg-table-cell">Size</th>
+                                <th class="d-none d-lg-table-cell">Image</th>
+                                <th class="d-none d-lg-table-cell">Quantity</th>
+                                <th class="d-none d-lg-table-cell">Original Price</th>
+                                <th class="d-none d-lg-table-cell">Status</th>
+                                <th class="d-table-cell d-lg-table-cell">Edit</th>
+                                <th class="d-table-cell d-lg-table-cell">Delete</th>
                             </tr>
                         </thead>
                         <tbody>
                             <?php
-                                // GET DATA FOR CATEGORIES
-                                $product = getData("product"); // FUNCTION TO FETCH CATEGORY DATA FROM THE DATABASE
-                                if(mysqli_num_rows($product) > 0){ // CHECK IF THERE ARE ANY CATEGORIES
-                                    foreach($product as $item){ // ITERATE THROUGH EACH CATEGORY
+                                // GET DATA FOR PRODUCTS
+                                $products = getData("product"); // FUNCTION TO FETCH PRODUCT DATA FROM THE DATABASE
+                                if(mysqli_num_rows($products) > 0){ // CHECK IF THERE ARE ANY PRODUCTS
+                                    foreach($products as $item){ // ITERATE THROUGH EACH PRODUCT
                             ?>
-                                        <tr>
-                                            <td name="product_id"><?= $item['id']; ?></td>
+                                        <tr style="text-align: center; vertical-align: middle;">
+                                            <td name="product_id" class="d-none d-lg-table-cell"><?= $item['id']; ?></td>
                                             <td><?= $item['name']; ?></td>
-                                            <td><?= $item['size']; ?></td>
-                                            <td>
+                                            <td class="d-none d-lg-table-cell"><?= $item['size']; ?></td>
+                                            <td class="d-none d-lg-table-cell">
                                                 <img src="../uploads/<?= $item['image']; ?>" width="50px" height="50px" alt="<?= $item['name']; ?>">
                                             </td>
-                                            <td><?= $item['quantity']?></td>
-                                            <td>₱ <?= $item['original_price']; ?></td>
-                                            <td>
+                                            <td class="d-none d-lg-table-cell"><?= $item['quantity']?></td>
+                                            <td class="d-none d-lg-table-cell">₱ <?= $item['original_price']; ?></td>
+                                            <td class="d-none d-lg-table-cell">
                                                 <?= $item['status'] == '0'? "Out of Stock": "Available"; ?>
                                             </td>
                                             <td>
-                                                <a href="editProduct.php?id=<?= $item['id']; ?>" class="btn bg-primary text-white">Edit</a>
+                                                <a href="editProduct.php?id=<?= $item['id']; ?>" style="margin-top:10px;" class="btn BlueBtn">Edit</a>
                                             </td>
                                             <td>
                                                 <form action="codes.php" method="POST">
                                                     <input type="hidden" name="product_id" value="<?= $item['id'];?>">
-                                                    <button type="submit" class="btn btn-danger text-white" name="deleteProduct_button">Delete</button>
+                                                    <button type="submit" style="margin-top:10px;" class="btn RedBtn" name="deleteProduct_button">Delete</button>
                                                 </form>
                                             </td>
                                         </tr>
                             <?php
                                     }
-                                } else{
-                                    echo "No records found";
+                                } else {
+                            ?>
+                                    <tr>
+                                        <td colspan="9"><br>No records found</td>
+                                    </tr>
+                            <?php
                                 }
                             ?>
                         </tbody>
@@ -69,4 +73,4 @@
     </div>
 </div>
 <!--------------- FOOTER --------------->
-<?php include('includes/footer.php');?>
+<?php include('includes/footer.php'); ?>

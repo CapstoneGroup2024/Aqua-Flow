@@ -79,7 +79,7 @@ $orders = getOrderTime("order_transac", "Completed");
                                     } else {
                                     ?>
                                     <tr>
-                                        <td colspan="7">No past orders found</td>
+                                        <td colspan="7"><br>No past orders found</td>
                                     </tr>
                                     <?php
                                     }

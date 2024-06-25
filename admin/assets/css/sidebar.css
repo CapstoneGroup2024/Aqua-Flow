@@ -1,0 +1,9 @@
+    /* Custom styles for offcanvas */
+    .offcanvas-start {
+        width: 250px; /* Adjust width as needed */
+      }
+  
+      .offcanvas-body {
+        padding: 10px;
+        background-color: red; /* Adjust padding as needed */
+      }

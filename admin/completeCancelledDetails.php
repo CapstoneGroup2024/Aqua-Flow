@@ -21,55 +21,54 @@
                     <div class="col-md-12">
                         <div class="card mt-4">
                             <div class="card-header">
-                                <h4 style="font-family: 'Suez One', sans-serif; font-size: 35px;">Order Details</h4>
+                                <h4 style="font-family: 'Poppins', sans-serif; font-size: 35px;">Order Details</h4>
                             </div>
-                            <div class="card-body">
-                                <!-- Display delivery details -->
-                                <div class="row" style="width: 300px; display: flex; float:right;">
-                                    <div class="card-body p-3 mt-4" style="border-radius: 20px;">
-                                        <div class="col align-items-center p-2">
-                                            <h4>Delivery Details</h4>
-                                            <div class="row-md-2 p-1" style="margin-top: 20px; margin-left: 10px">
-                                                <h6>Customer Name: <br><?= $orderDetails['user_name'] ?></h6>
+                            <div class="card-body" style="font-family: 'Poppins'; margin-top:-40px;">
+                                <div class="row">
+                                    <div class="col-md-3 text-center">
+                                        <!-- Delivery Details Card -->
+                                        <div class="card shadow-sm rounded-3 p-2 mt-4">
+                                            <h4>Order ID #<?= $orderDetails['order_transac_id'] ?></h4>
+                                            <br>
+                                            <h6 class="detailOd"><?= formatDate($orderDetails['order_at']) ?></h6>
+                                        </div>
+                                        <div class="card shadow-sm rounded-3 p-3 mt-2">
+                                            <h4>Order Status</h4>
+                                            <br>
+                                            <h6 class="detailOd"><?= $orderDetails['status'] ?></h6>
+                                        </div>
+                                        <div class="card shadow-sm rounded-3 p-3 mt-2">
+                                            <h5>Delivery Details</h5>
+                                            <div class="p-1">
+                                                <h6 class="detailOd">Customer Name: <br><?= $orderDetails['user_name'] ?></h6>
                                             </div>
-                                            <div class="row-md-2 p-1" style="margin-top: -10px; margin-left: 12px">
-                                                <h6>Contact Number: <br><?= $orderDetails['phone'] ?></h6>
+                                            <div class="p-1">
+                                                <h6 class="detailOd">Contact Number: <br><?= $orderDetails['phone'] ?></h6>
                                             </div>
-                                            <div class="row-md-2 p-1" style="margin-top: -10px; margin-left: 12px">
-                                                <h6>Address: <br><?= $orderDetails['address'] ?></h6>
+                                            <div class="p-1">
+                                                <h6 class="detailOd">Address: <br><?= $orderDetails['address'] ?></h6>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="row" style="width: 300px; display: flex; float:right">
-                                        <div class="card-body p-3 mt-4" style="border-radius: 20px;">
-                                            <div class="col align-items-center p-2">
-                                                <h4>Order Status</h4>
-                                                <div class="row-md-2 p-1" style="margin-top: 20px; margin-left: 10px">
-                                                    <h6><?= $orderDetails['status'] ?></h6>
+                                    <div class="col-md-9">
+                                        <!-- Order Summary Card -->
+                                        <div class="card shadow-sm rounded-3 p-3 mt-4 text-center">
+                                            <div class="row align-items-center">
+                                                <div class="col-6 col-md-3">
+                                                    <h5>Quantity</h5>
+                                                </div>
+                                                <div class="col-6 col-md-3">
+                                                    <h5>Items</h5>
+                                                </div>
+                                                <div class="col-md-3 d-none d-md-block">
+                                                    <h5>Price</h5>
+                                                </div>
+                                                <div class="col-md-3 d-none d-md-block">
+                                                    <h5>Total</h5>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                </div>
-
-                                <div class="card" style="box-shadow: none; padding-left: 10px; width: 600px; border-radius: 20px; display: flex; float:left;">    
-                                    <div class="row align-items-center p-2">
-                                        <div class="col-md-4">
-                                            <h6 style=" font-size: 22px;">Quantity</h6>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <h6 style=" font-size: 22px;">Items</h6>
-                                        </div>
-                                        <div class="col-md-2">
-                                            <h6 style="font-size: 22px;">Price</h6>
-                                        </div>
-                                        <div class="col-md-2">
-                                            <h6 style=" font-size: 22px;">Total</h6>
-                                        </div>
-                                    </div>
-                                </div>        
-
-                                <!-- Display order items -->
+                                    <!-- Display order items -->
                                 <?php
                                     // Fetch order items for the given order_transac_id
                                     $query = "SELECT * FROM order_transac WHERE order_id = ?";
@@ -83,43 +82,59 @@
                                         while ($item = mysqli_fetch_assoc($itemsResult)) {
                                             $itemTotal = $item['quantity'] * $item['price'];
                                 ?>
-                                            <div class="card p-1 text-center" style="box-shadow: none; width: 600px; border-radius: 20px; display: flex; float:left;">
-                                                <div class="row align-items-center ">
-                                                    <div class="col-md-2" style="padding-left: 50px; margin-bottom: 0px">
-                                                        <h5><?= $item['quantity'] ?></h5>
-                                                    </div>
-                                                    <div class="col-md-6">
-                                                        <h5><?= $item['product_name'] ?></h5>
-                                                    </div>
-                                                    <div class="col-md-2">
-                                                        <h5><?= $item['price'] ?></h5>
-                                                    </div>
-                                                    <div class="col-md-2">
-                                                        <h5>₱<?= $itemTotal ?></h5>
-                                                    </div>
-                                                </div>
+                                    <div class="card shadow-sm rounded-3 p-3 mt-2 text-center">
+                                        <div class="row align-items-center">
+                                            <div class="col-6 col-md-2">
+                                                <h5 class="detailOd"><?= $item['quantity'] ?></h5>
                                             </div>
-                                <?php
+                                            <div class="col-6 col-md-2">
+                                                <img src="uploads/<?= $item['product_image'] ?>" width="80px" alt="<?= $item['product_name'] ?>" class="rounded-3">
+                                            </div>
+                                            <div class="col-md-2 d-none d-md-block">
+                                                <h5 class="detailOd"><?= $item['product_name'] ?></h5>
+                                            </div>
+                                            <div class="col-md-3 d-none d-md-block">
+                                                <h5 class="detailOd"><?= $item['price'] ?></h5>
+                                            </div>
+                                            <div class="col-md-3 d-none d-md-block">
+                                                <h5 class="detailOd"><span style="font-family: 'Poppins', sans-serif;">₱<?= $itemTotal ?>.00</span></h5>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <?php
                                         }
                                     } else {
                                         echo "No items found for this order.";
                                     }
                                 ?>
-                                <!-- Display subtotal, delivery fee, and grand total -->
-                                <div class="card-body p-3" style="border-radius: 20px; width: 600px; display: flex; float:left; margin-top: 20px">
-                                    <div class="col align-items-center p-2">
-                                        <div class="row-md-2  p-2" style="padding-top: 20px; margin-bottom: 0px; border-radius: 8px; align-items:center;">
-                                            <h5>Subtotal: <span class="subtotal-price" style="display: flex; float:right;">₱<?= $orderDetails['subtotal'] ?></span></h5>
+                                    <div class="card shadow-sm rounded-3 p-3 mt-2">
+                                        <!-- Display subtotal, delivery fee, and grand total -->
+                                        <div class="row align-items-center justify-content-between">
+                                            <div class="col-6 col-md-6 text-start">
+                                                <h5>Subtotal:</h5>
+                                            </div>
+                                            <div class="col-6 col-md-6 text-end">
+                                            <h5 class="detailOd"><span style="font-family: 'Poppins', sans-serif;">₱<?= $orderDetails['subtotal'] ?>.00</span></h5>
+                                            </div>
                                         </div>
-                                        <div class="row-md-2  p-2" style="padding-top: 20px; margin-bottom: 0px; border-radius: 8px; align-items:center;">
-                                            <h5>Delivery Fee: <span class="delivery-fee" style="display: flex; float:right;">₱<?= $orderDetails['additional_fee'] ?></span></h5>
+                                        <div class="row align-items-center justify-content-between">
+                                            <div class="col-6 col-md-6 text-start">
+                                                <h5>Additional Fee:</h5>
+                                            </div>
+                                            <div class="col-6 col-md-6 text-end">
+                                                <h5 class="detailOd"><span style="font-family: 'Poppins', sans-serif;">₱<?= $orderDetails['additional_fee'] ?>.00</span></h5>
+                                            </div>
                                         </div>
-                                        <div class="row-md-2  p-2" style="padding-top: 20px; margin-bottom: 0px; border-radius: 8px; align-items:center;">
-                                            <h5>Total: <span class="grand-total" style="display: flex; float:right;">₱<?= $orderDetails['grand_total'] ?></span></h5>
+                                        <div class="row align-items-center justify-content-between">
+                                            <div class="col-6 col-md-6 text-start">
+                                                <h5>Grand Total:</h5>
+                                            </div>
+                                            <div class="col-6 col-md-6 text-end">
+                                            <h5 class="detailOd"><span style="font-family: 'Poppins', sans-serif;">₱<?= $orderDetails['grand_total'] ?>.00</span></h5>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-
                             </div>
                         </div>
                     </div>

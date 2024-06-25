@@ -1,20 +1,13 @@
-<link rel="stylesheet" href="assets/css/scrollbar.css">
-
 <aside class="sidenav navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-4 fixed-start ms-3   bg-gradient-blue" id="sidenav-main">
      <div class="sidenav-header">
-      <i class="fas fa-times p-3 cursor-pointer text-white opacity-5 position-absolute end-0 top-0 d-none d-xl-none" aria-hidden="true" id="iconSidenav"></i>
       <p class="navbar-brand m-0" href="" target="_blank">
-        <span class="ms-1 m-0 font-weight-bold text-dark-blue" style="font-size: 25px; font-weight: bold">Aqua Flow</span>
+      <i class="fas fa-tint" id="loGo"></i>
+        <span class="ms-1 m-0 font-weight-bold text-dark-blue" style="font-size: 25px; font-weight: bold; font-family:'Poppins'; font-weight: 500;">Aqua Flow</span>
       </p>
     </div>
     <hr class="horizontal light mt-0 mb-2">
     <div class="collapse navbar-collapse  w-auto  max-height-vh-100" id="sidenav-collapse-main" style="overflow-x: hidden !important;">
       <ul class="navbar-nav">
-        <!--------------- MARKETING --------------->
-        <li class="nav-item" style="margin-left: 15px">
-            <span class="nav-link-text ms-1" id="side-bar-sub-title" style="color: black;">MARKETING</span>
-        </li>
-        <!--------------- DASHBOARD --------------->
         <li class="nav-item">
           <a class="nav-link text-dark-blue" href="index.php" id="side-bar-link-box">
             <div class="text-dark-blue text-center me-2 d-flex align-items-center justify-content-center">

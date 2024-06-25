@@ -2,7 +2,6 @@
     include('includes/header.php');
     include('../middleware/adminMid.php');
 ?>
-<!--------------- ADD PRODUCT PAGE --------------->
 <div class="container">
     <div class="row">
         <div class="col-md-12">

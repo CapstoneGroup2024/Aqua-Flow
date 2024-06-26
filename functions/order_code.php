@@ -495,7 +495,8 @@ if(isset($_POST['cartBtn'])){ // CHECK IF THE 'cartBtn' IS SET IN THE POST REQUE
     }
 } else if(isset($_POST['cancelOrderBtn'])){
     $order_id = $_POST['order_id'];
-
+    $userId = $_SESSION['user_id'];
+    
     $updateQuery = "UPDATE orders SET status = 'Cancelled' WHERE id = ?";
     $statement = mysqli_prepare($con, $updateQuery);
 
@@ -545,24 +546,229 @@ if(isset($_POST['cartBtn'])){ // CHECK IF THE 'cartBtn' IS SET IN THE POST REQUE
     $updateProductQuantitiesResult = mysqli_stmt_execute($statement3);
 
     if($result && $insertResult && $updateProductQuantitiesResult){
+        $email_query = "SELECT email FROM users WHERE user_id = '$userId'";
+        $email_query_run = mysqli_query($con, $email_query);
 
-        // Delete from the orders table
-        $delete_order_query = "DELETE FROM orders WHERE id=?";
-        $statement4 = mysqli_prepare($con, $delete_order_query);
-        mysqli_stmt_bind_param($statement4, "i", $order_id);
-        $delete_order_query_run = mysqli_stmt_execute($statement4);
-    
-        // Delete from the order_items table
-        $delete_items_query = "DELETE FROM order_items WHERE order_id=?";
-        $statement5 = mysqli_prepare($con, $delete_items_query);
-        mysqli_stmt_bind_param($statement5, "i", $order_id);
-        $delete_items_query_run = mysqli_stmt_execute($statement5);
+            if (!$email_query_run){
+                $_SESSION['error'] = "Error retrieving email: " . mysqli_error($con) ."!";
+                header("Location: ../purchases.php");
+                exit();
+            }
 
-        $_SESSION['success'] = "✔ Order cancelled successfully!";
-        header('Location: ../purchases.php');
-        exit;
-    
-    } else{
+            if ($email_query_run) {
+                // Fetch the email address from the result
+                $row = mysqli_fetch_assoc($email_query_run);
+                $email = $row['email'];
+
+                $order_query = "SELECT * FROM order_transac WHERE order_id = ?";
+                $stmt = mysqli_prepare($con, $order_query);
+                mysqli_stmt_bind_param($stmt, "i", $order_id);
+                mysqli_stmt_execute($stmt);
+                $result = mysqli_stmt_get_result($stmt);
+
+                if ($result && mysqli_num_rows($result) > 0) {
+                    $order_data = mysqli_fetch_assoc($result);
+
+                    if ($order_data) {
+                        // Extract necessary variables for email content
+                        $order_id = $order_data['order_id'];
+                        $user_name = $order_data['user_name'];
+                        $phone = $order_data['phone'];
+                        $address = $order_data['address'];
+                        $order_at = $order_data['order_at'];
+                        $status = $order_data['status'];
+                        $subtotal = $order_data['subtotal'];
+                        $additional_fee = $order_data['additional_fee'];
+                        $grand_total = $order_data['grand_total'];
+
+                        // Fetch products related to the order
+                        $products_query = "SELECT product_name, quantity, price, total FROM order_transac WHERE order_id = ?";
+                        $stmt = mysqli_prepare($con, $products_query);
+                        mysqli_stmt_bind_param($stmt, "i", $order_id);
+                        mysqli_stmt_execute($stmt);
+                        $products_result = mysqli_stmt_get_result($stmt);
+
+                        $products = []; // Initialize an empty array to store products
+                        while ($product = mysqli_fetch_assoc($products_result)) {
+                            $products[] = $product; // Store each product in the array
+                        }
+
+                        $mail = new PHPMailer(true);
+                        try {
+                            $mail->SMTPOptions = [
+                                'ssl' => [
+                                    'verify_peer' => false,
+                                    'verify_peer_name' => false,
+                                    'allow_self_signed' => true,
+                                ],
+                            ];
+                            
+                            $mail->SMTPDebug = SMTP::DEBUG_SERVER; // ENABLE DEBUG OUTPUT
+                            $mail->isSMTP(); // SET MAILER TO USE SMTP
+                            $mail->Host = 'smtp.gmail.com'; // SPECIFY SMTP SERVER
+                            $mail->SMTPAuth = true; // ENABLE SMTP AUTHENTICATION
+                            $mail->Username = 'aquaflow024@gmail.com'; // SMTP USERNAME
+                            $mail->Password = 'pamu swlw fxyj pavq'; // SMTP PASSWORD
+                            $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS; // ENABLE TLS ENCRYPTION
+                            $mail->Port = 587; // TCP PORT TO CONNECT TO
+            
+                            // SET EMAIL SENDER AND RECIPIENT
+                            $mail->setFrom('aquaflow024@gmail.com', 'AquaFlow');
+                            $mail->addAddress($email, 'AquaFlow'); // ADD RECIPIENT EMAIL
+                            $mail->isHTML(true); // SET EMAIL FORMAT TO HTML
+            
+                            // SET EMAIL SUBJECT AND BODY CONTENT
+                            $mail->Subject = 'Order Cancelled';
+                            $mail->Body = '
+                            <!DOCTYPE html>
+                            <html lang="en">
+                            <head>
+                                <meta charset="UTF-8">
+                                <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                                <title>Order Receipt</title>
+                                <style>
+                                    body {
+                                        font-family: Arial, sans-serif;
+                                    }
+                                    table {
+                                        width: 100%;
+                                        border-collapse: collapse;
+                                        margin-bottom: 20px;
+                                    }
+                                    table, th, td {
+                                        border: 1px solid black;
+                                    }
+                                    th, td {
+                                        padding: 10px;
+                                        text-align: left;
+                                    }
+                                    th {
+                                        background-color: #f2f2f2;
+                                    }
+                                    .receipt-container {
+                                        max-width: 600px;
+                                        margin: auto;
+                                        padding: 20px;
+                                        border: 1px solid #ccc;
+                                    }
+                                    .header {
+                                        background-color: #D33131;
+                                        color: white;
+                                        text-align: center;
+                                        padding: 10px;
+                                        margin-bottom: 20px;
+                                    }
+                                    .billing-address {
+                                        margin: 0;
+                                        padding: 0;
+                                        list-style-type: none;
+                                    }
+                                </style>
+                            </head>
+                            <body>
+                                <div class="receipt-container">
+                                    <div class="header">
+                                        <h2>Order Cancelled: #' . $order_id . '</h2>
+                                    </div>
+                                    
+                                    <p>Notification to let you know - you have<span style="font-weight:bold;"> CANCELLED </span>Order #' . $order_id . '.</p>
+                                    <p>Please retain this cancellation information for your records.</p>
+
+                                    <h3>[Order ID: #' . $order_id . '] (' . date('F j, Y \a\t g:i A', strtotime($order_at)) . ')</h3>
+                                    <table>
+                                        <thead>
+                                            <tr>
+                                                <th>Product Name</th>
+                                                <th>Quantity</th>
+                                                <th>Unit Price</th>
+                                                <th>Total Price</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>';
+
+                                // Loop through products and display them in the table
+                                foreach ($products as $product) {
+                                    $mail->Body .= '
+                                    <tr>
+                                        <td>' . $product['product_name'] . '</td>
+                                        <td>' . $product['quantity'] . '</td>
+                                        <td>₱' . number_format($product['price'], 2) . '</td>
+                                        <td>₱' . number_format($product['total'], 2) . '</td>
+                                    </tr>';
+                                }
+
+                                $mail->Body .= '
+                                            </tbody>
+                                        </table>
+
+                                        <h3>Order Summary:</h3>
+                                        <table>
+                                            <tr>
+                                                <th>Subtotal</th>
+                                                <td>₱' . number_format($subtotal, 2) . '</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Additional Fee</th>
+                                                <td>₱' . number_format($additional_fee, 2) . '</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Grand Total</th>
+                                                <td><strong>₱' . number_format($grand_total, 2) . '</strong></td>
+                                            </tr>
+                                        </table>
+
+                                        <h3>Billing Address:</h3>
+                                        <ul class="billing-address"> 
+                                            <li>' . $user_name . '</li>
+                                            <li>' . $address . '</li>
+                                            <li>' . $phone . '</li>
+                                            <li>' . $email . '</li>
+                                        </ul>
+
+                                        <p>Your order has been cancelled, if you think this is a mistake, please contact us immediately.</p>
+                                    </div>
+                                </body>
+                                </html>
+                                ';
+                                // Send email
+                                $mail->send();
+                        } catch (Exception $e) {
+                            $_SESSION['error'] = "Message could not be sent. Mailer Error: {$mail->ErrorInfo}! ' . $email . $userId '";
+                            header("Location: ../purchases.php");
+                            exit();
+                        }
+                // Delete from the orders table
+                $delete_order_query = "DELETE FROM orders WHERE id=?";
+                $statement4 = mysqli_prepare($con, $delete_order_query);
+                mysqli_stmt_bind_param($statement4, "i", $order_id);
+                $delete_order_query_run = mysqli_stmt_execute($statement4);
+            
+                // Delete from the order_items table
+                $delete_items_query = "DELETE FROM order_items WHERE order_id=?";
+                $statement5 = mysqli_prepare($con, $delete_items_query);
+                mysqli_stmt_bind_param($statement5, "i", $order_id);
+                $delete_items_query_run = mysqli_stmt_execute($statement5);
+
+                $_SESSION['success'] = "✔ Order cancelled successfully!";
+                header('Location: ../purchases.php');
+                exit;
+
+         }  else {
+            $_SESSION['error'] = "No order found with ID: $order_id!";
+            header("Location: ../purchases.php");
+            exit();
+        }
+            } else {
+                    $_SESSION['error'] = "Error retrieving order details: " . mysqli_error($con) ."!";
+                    header("Location: ../purchases.php");
+                    exit();
+                }
+    } else {
+        $_SESSION['error'] = "Error retrieving email: " . mysqli_error($con) ."!";
+        header("Location: ../purchases.php");
+        exit();
+    } 
+} else{
         $_SESSION['error'] = "Error: " . mysqli_error($con) . "!";
         header('Location: ../purchases.php');
         exit;

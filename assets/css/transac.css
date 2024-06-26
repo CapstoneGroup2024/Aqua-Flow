@@ -62,12 +62,26 @@ h5{
     font-size: 16px;
     font-weight: 500;
 }
+.bg-blue:hover{
+    background-color: #AAD7F6;
+    color: #013D67;
+    font-family: 'Poppins'; 
+    font-size: 16px;
+    font-weight: 500;
+}
 
 .orderDate{
     font-size: 15px;
 }
 
 .bg-red{
+    background-color: #f43737;
+    color: white;
+    font-family: 'Poppins'; 
+    font-size: 16px;
+    font-weight: 500;
+}
+.bg-red:hover{
     background-color: #f43737;
     color: white;
     font-family: 'Poppins'; 

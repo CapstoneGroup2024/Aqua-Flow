@@ -14,10 +14,16 @@
                     <!--------------- FORM--------------->
                     <form action="codes.php" method="POST" enctype="multipart/form-data">
                         <div class="row" style="font-family: 'Poppins', sans-serif;">
-                            <div class="col-md-12  mb-3"> 
+                            <div class="col-md-6  mb-3"> 
                                 <div class="form-group">
                                     <label for="">Name</label>
                                     <input type="text" class="form-control" placeholder="Enter Product Name" name="name">
+                                </div>
+                            </div>
+                            <div class="col-md-6 mb-3"> 
+                                <div class="form-group">
+                                    <label for="">Size</label>
+                                    <input type="text" class="form-control" placeholder="Enter Size" name="size">
                                 </div>
                             </div>
                             <div class="col-md-12"> 
@@ -30,18 +36,6 @@
                                 <div class="form-group">
                                     <label for="">Quantity</label>
                                     <input type="number" class="form-control" placeholder="Enter Quantity" name="quantity">
-                                </div>
-                            </div>
-                            <div class="col-md-6 mb-3"> 
-                                <div class="form-group">
-                                    <label for="">Size</label>
-                                    <input type="text" class="form-control" placeholder="Enter Size" name="size">
-                                </div>
-                            </div>
-                            <div class="col-md-6 mb-3"> 
-                                <div class="form-group">
-                                    <label for="">Original Price</label>
-                                    <input type="text" class="form-control" placeholder="Enter Original Price" name="original_price" >
                                 </div>
                             </div>
                             <div class="col-md-6 mb-3"> 

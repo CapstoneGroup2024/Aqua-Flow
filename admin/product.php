@@ -20,7 +20,6 @@
                                 <th class="d-none d-lg-table-cell">Size</th>
                                 <th class="d-none d-lg-table-cell">Image</th>
                                 <th class="d-none d-lg-table-cell">Quantity</th>
-                                <th class="d-none d-lg-table-cell">Original Price</th>
                                 <th class="d-none d-lg-table-cell">Status</th>
                                 <th class="d-table-cell d-lg-table-cell">Edit</th>
                                 <th class="d-table-cell d-lg-table-cell">Delete</th>
@@ -41,7 +40,6 @@
                                                 <img src="../uploads/<?= $item['image']; ?>" width="50px" height="50px" alt="<?= $item['name']; ?>">
                                             </td>
                                             <td class="d-none d-lg-table-cell"><?= $item['quantity']?></td>
-                                            <td class="d-none d-lg-table-cell"><span style="font-family: 'Poppins', sans-serif;">₱<?= $item['original_price']; ?>.00</span></td>
                                             <td class="d-none d-lg-table-cell">
                                                 <?= $item['status'] == '0'? "Out of Stock": "Available"; ?>
                                             </td>

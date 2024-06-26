@@ -109,7 +109,7 @@ function getOrderData($table, $userId, $timestamp_column = 'order_at') {
                                                     <h5 class="orderDate"><?= formatDate($order['order_at']); ?></h5>
                                                 </div>
                                                 <div class="col-md-2 align-items-center col-6">
-                                                    <a href="transaction_details.php?id=<?= $order['order_id']; ?>" class="btn bg-blue">View Details</a>
+                                                    <a href="cancelOrderDetails.php?id=<?= $order['order_id']; ?>" class="btn bg-blue">View Details</a>
                                                 </div>
                                             </div>
                                         </div>

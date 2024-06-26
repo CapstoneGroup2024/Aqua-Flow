@@ -109,7 +109,6 @@ if(isset($_POST['addCateg_button'])){ // IF FORM SUBMIT IS FROM addCateg_button
 } else if(isset($_POST['addProduct_button'])){
     $name = $_POST['name'];
     $size = $_POST['size'];
-    $original_price = $_POST['original_price'];
     $selling_price = $_POST['selling_price'];
     $image = $_POST['image'];
     $quantity = $_POST['quantity'];
@@ -122,8 +121,8 @@ if(isset($_POST['addCateg_button'])){ // IF FORM SUBMIT IS FROM addCateg_button
     $image_ext = pathinfo($image, PATHINFO_EXTENSION); // GET THE FILE EXTENSION OF THE UPLOADED IMAGE 
     $filename = time().'.'.$image_ext; // GENERATE A UNIQUE FILENAME FOR THE UPLOADED IMAGE BY APPEDING THE CURRENT TIMESTAMP AND THE ORIGINAL FILE EXT
 
-    $product_query = "INSERT INTO product(name, size, original_price, selling_price, quantity, status, image) 
-    VALUES ('$name', '$size', '$original_price', '$selling_price', '$quantity', '$status', '$filename')";
+    $product_query = "INSERT INTO product(name, size, selling_price, quantity, status, image) 
+    VALUES ('$name', '$size', '$selling_price', '$quantity', '$status', '$filename')";
 
     $product_query_run = mysqli_query($con, $product_query);
 
@@ -141,7 +140,6 @@ if(isset($_POST['addCateg_button'])){ // IF FORM SUBMIT IS FROM addCateg_button
     $product_id = $_POST['product_id'];
     $name = $_POST['name'];
     $size = $_POST['size'];
-    $original_price = $_POST['original_price'];
     $selling_price = $_POST['selling_price'];
     $image = $_POST['image'];
     $quantity = $_POST['quantity'];
@@ -159,8 +157,7 @@ if(isset($_POST['addCateg_button'])){ // IF FORM SUBMIT IS FROM addCateg_button
 
     $path = "../uploads";
 
-    $update_query = "UPDATE product SET name='$name', size='$size', 
-    original_price='$original_price', selling_price='$selling_price', quantity='$quantity',
+    $update_query = "UPDATE product SET name='$name', size='$size', selling_price='$selling_price', quantity='$quantity',
     status='$status', image='$update_filename' WHERE id='$product_id' ";
 
     $update_query_run = mysqli_query($con, $update_query);

@@ -44,16 +44,10 @@
                                                 <img src="../uploads/<?=$data['image']; ?>" height="50px" width="50px" alt="">
                                             </div>
                                         </div>
-                                        <div class="col-md-12 mb-3"> 
+                                        <div class="col-md-6 mb-3"> 
                                             <div class="form-group">
                                                 <label for="">Quantity</label>
                                                 <input type="number" value="<?=$data['quantity']; ?>" class="form-control" placeholder="Enter Quantity" name="quantity">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6 mb-3"> 
-                                            <div class="form-group">
-                                                <label for="">Original Price</label>
-                                                <input type="text" value="<?=$data['original_price']; ?>" class="form-control" placeholder="Enter Original Price" name="original_price" >
                                             </div>
                                         </div>
                                         <div class="col-md-6 mb-3"> 

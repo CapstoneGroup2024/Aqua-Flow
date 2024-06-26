@@ -65,7 +65,7 @@ $orders = getOrderTime("order_transac", "Completed");
                                         <td class="d-none d-lg-table-cell"><?= $order['product_name']; ?></td>
                                         <td class="d-none d-lg-table-cell"><?= formatDate($order['order_at']); ?></td>
                                         <td>
-                                            <a href="completeCancelledDetails.php?id=<?= $order['order_transac_id']; ?>" style="margin-top: 10px;" class="btn BlueBtn">View Details</a>
+                                            <a href="completeDetails.php?id=<?= $order['order_transac_id']; ?>" style="margin-top: 10px;" class="btn BlueBtn">View Details</a>
                                         </td>
                                         <td>
                                             <form action="codes.php" method="POST">

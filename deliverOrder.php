@@ -122,9 +122,18 @@ function getOrderData($table, $userId, $timestamp_column = 'order_at') {
                             <a href="payment.php?id=<?= $order['id']; ?>" class="btn bg-blue">View Details</a>
                         </div>
                         <div class="col-md-2 d-none d-md-block">
-                            <form action="functions/order_code.php" method="POST">
+                            <form id="statusForm<?= $order['id']; ?>" action="functions/order_code.php" method="POST">
                                 <input type="hidden" name="order_id" value="<?= $order['id']; ?>">
-                                <input type="submit" class="btn bg-red" name="cancelOrderBtn" value="Cancel Order">
+        
+                                <select class="reasonSelect" name="reason" style="padding: 8px; border-radius: 10px;" required>
+                                    <option value="Unknown" selected>Select Reason</option>
+                                    <option value="Incorrect Order">Incorrect Order</option>
+                                    <option value="Change of Mind">Change of Mind</option>
+                                    <option value="Duplicate Order">Duplicate Order</option>
+                                    <option value="Other">Other</option>
+                                </select>  
+                                
+                                <input type="submit" class="btn bg-red updateButton" style="margin-top: 10px;" name="cancelOrderBtn" value="Cancel Order" disabled>                  
                             </form>
                         </div>
                     </div>
@@ -166,5 +175,26 @@ function getOrderData($table, $userId, $timestamp_column = 'order_at') {
         </div>
     </div>
 </section>
+<script>
+    // Function to toggle the submit button based on reason select
+    function toggleButton(reasonSelect) {
+        var form = reasonSelect.closest('form');
+        var updateButton = form.querySelector('.updateButton'); // Assuming class .updateButton is used for update button
+        
+        if (reasonSelect.value !== 'Unknown') {
+            updateButton.removeAttribute('disabled'); // Enable the button when a valid reason is selected
+        } else {
+            updateButton.setAttribute('disabled', 'disabled'); // Disable the button for 'Unknown'
+        }
+    }
+
+    // Initial setup: Attach onchange event listeners to all reason selects
+    var reasonSelects = document.querySelectorAll('.reasonSelect');
+    reasonSelects.forEach(function(select) {
+        select.addEventListener('change', function() {
+            toggleButton(this);
+        });
+    });
+</script>
 <!--------------- FOOTER --------------->
 <?php include('includes/footer.php'); ?>

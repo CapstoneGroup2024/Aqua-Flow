@@ -48,7 +48,7 @@ if(isset($_POST['cartBtn'])){ // CHECK IF THE 'cartBtn' IS SET IN THE POST REQUE
         header('Location: ../order.php');
         exit; // Terminate further execution
     }
-    
+
     $stocksCheck = "SELECT quantity FROM product WHERE id='$productId'";
     $stocksCheck_query = mysqli_query($con, $stocksCheck);
     
@@ -516,6 +516,7 @@ if(isset($_POST['cartBtn'])){ // CHECK IF THE 'cartBtn' IS SET IN THE POST REQUE
 } else if(isset($_POST['cancelOrderBtn'])){
     $order_id = $_POST['order_id'];
     $userId = $_SESSION['user_id'];
+    $reason = $_POST['reason'];
     
     $updateQuery = "UPDATE orders SET status = 'Cancelled' WHERE id = ?";
     $statement = mysqli_prepare($con, $updateQuery);
@@ -525,7 +526,7 @@ if(isset($_POST['cartBtn'])){ // CHECK IF THE 'cartBtn' IS SET IN THE POST REQUE
     $result = mysqli_stmt_execute($statement);
 
     // Insert necessary data into the order_transac table
-    $insertQuery = "INSERT INTO order_transac (order_id, user_id, user_name, phone, address, product_id, product_name, quantity, price, total, status, subtotal, additional_fee, grand_total, order_at)
+    $insertQuery = "INSERT INTO order_transac (order_id, user_id, user_name, phone, address, product_id, product_name, quantity, price, total, status, subtotal, additional_fee, grand_total, reason, order_at)
                     SELECT
                         o.id AS order_id,
                         u.user_id AS user_id,
@@ -541,6 +542,7 @@ if(isset($_POST['cartBtn'])){ // CHECK IF THE 'cartBtn' IS SET IN THE POST REQUE
                         o.subtotal AS subtotal,
                         o.additional_fee AS additional_fee,
                         o.grand_total AS grand_total,
+                        '$reason',
                         o.order_at AS order_at
                     FROM
                         orders o
@@ -600,6 +602,7 @@ if(isset($_POST['cartBtn'])){ // CHECK IF THE 'cartBtn' IS SET IN THE POST REQUE
                         $subtotal = $order_data['subtotal'];
                         $additional_fee = $order_data['additional_fee'];
                         $grand_total = $order_data['grand_total'];
+                        $reason = $order_data['reason'];
 
                         // Fetch products related to the order
                         $products_query = "SELECT product_name, quantity, price, total FROM order_transac WHERE order_id = ?";
@@ -695,6 +698,7 @@ if(isset($_POST['cartBtn'])){ // CHECK IF THE 'cartBtn' IS SET IN THE POST REQUE
                                     <p>Please retain this cancellation information for your records.</p>
 
                                     <h3>[Order ID: #' . $order_id . '] (' . date('F j, Y \a\t g:i A', strtotime($order_at)) . ')</h3>
+                                    <h3>Reason of Cancellation: ' . $reason . '</h3>
                                     <table>
                                         <thead>
                                             <tr>

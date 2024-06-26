@@ -117,7 +117,7 @@
         }
     } else if (isset($_SESSION['registration_data'])) {
         // REGISTRATION DATA EXISTS IN SESSION
-        $user_id = $_SESSION['registration_data'];
+        $user_id = $_SESSION['user_id'];
         $registration_data = $_SESSION['registration_data'];
         $name = $registration_data["name"];
         $email = $registration_data["email"];
@@ -148,9 +148,9 @@
             }
             
             // QUERY TO RETRIEVE USER ID AND VERIFICATION CODE
-            $query = "SELECT verification_code FROM verification_codes WHERE email = ?";
+            $query = "SELECT verification_code FROM verification_codes WHERE email = ? AND id = ?";
             $stmt = $con->prepare($query);
-            $stmt->bind_param("s", $email);
+            $stmt->bind_param("si", $email, $user_id);
             $stmt->execute();
             $result = $stmt->get_result();
             

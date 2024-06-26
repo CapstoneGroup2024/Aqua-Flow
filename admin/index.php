@@ -72,7 +72,7 @@
                 <i class="material-icons opacity-10">weekend</i>
             </div>
             <div class="text-end pt-1">
-                <p class="text-sm mb-0 text-capitalize">Complete Today</p>
+                <p class="text-sm mb-0 text-capitalize">Done Today</p>
                 <h4 class="mb-0"><?php echo number_format($totalDeliverToday); ?></h4>
             </div>
         </div>

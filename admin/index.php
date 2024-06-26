@@ -147,7 +147,7 @@
                             <?php
                             // Example of dynamic message based on recent additions
                             if ($newUsersCount > 0) {
-                                echo "<p class='mb-0'>Just updated with new users!</p>";
+                                echo "<p class='mb-0'>New user registered!</p>";
                             } else {
                                 echo "<p class='mb-0'>Just updated</p>";
                             }

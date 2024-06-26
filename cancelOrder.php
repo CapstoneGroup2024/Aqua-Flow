@@ -130,17 +130,5 @@ function getOrderData($table, $userId, $timestamp_column = 'order_at') {
             </div>
     </div>
 </section>
-    <!--------------- FOOTER --------------->
-    <?php include('includes/footer.php'); ?>
-    <!--------------- ALERTIFY JS --------------->
-    <script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
-    <script>
-        <?php if(isset($_SESSION['message'])): ?>
-            alertify.set('notifier','position', 'top-right');
-            var notification = alertify.success('<i class="fas fa-check animated-check"></i> <?= $_SESSION['message']?>');
-            notification.getElementsByClassName('animated-check')[0].addEventListener('animationend', function() {
-                this.classList.remove('animated-check');
-            });
-            <?php unset($_SESSION['message']); ?>
-        <?php endif; ?>
-    </script>
+<!--------------- FOOTER --------------->
+<?php include('includes/footer.php'); ?>

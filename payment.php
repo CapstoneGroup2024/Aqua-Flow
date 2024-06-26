@@ -171,10 +171,18 @@ if ($userDetails) {
 
 <?php
     } else {
-        echo "<p>No order details found.</p>";
+        ?>
+        <div class="card rounded-3 p-3 mt-3 text-center" style="font-family: 'Poppins'; border:none;">
+            <span>No order details found.</span>
+        </div>
+        <?php
     }
 } else {
-    echo "<p>No user details found.</p>";
+    ?>
+    <div class="card rounded-3 p-3 mt-3 text-center" style="font-family: 'Poppins'; border:none;">
+        <span>No user details found.</span>
+    </div>
+    <?php
 }
 
 // INCLUDE FOOTER

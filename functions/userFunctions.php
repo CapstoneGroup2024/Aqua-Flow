@@ -237,7 +237,7 @@ function getFirstProductByOrderId($orderId) {
         if ($product_result && $product = $product_result->fetch_assoc()) {
             // Return the product details
             return array(
-                'product_name' => $product['name']
+                'product_name' => $product['name'],
             );
         } else {
             // If no product found, return null

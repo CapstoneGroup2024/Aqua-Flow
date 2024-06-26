@@ -1,7 +1,5 @@
 <!--------------- INCLUDES --------------->
 <?php include('includes/header.php');?>
-<!--------------- CSS --------------->
-<link rel="stylesheet" href="assets/css/forgotP.css">    
 <!--------------- RESTRICT USER ACCESSING THIS PAGE THROUGH URL  --------------->
 <?php 
     if(isset($_SESSION['auth'])){ // CHECKS IF THE USER IS ALREADY LOGGED IN
@@ -11,41 +9,34 @@
     }
 ?>
 
-<div class="row vh-100 g-0">
-    <!--------------- LEFT SIDE --------------->
-    <div class="col-lg-6 position-relative d-none d-lg-block">
-        <div class="bg-holder" style="background-image: url(assets/images/loginPic.png);"></div>
-    </div>
-    <!--------------- RIGHT SIDE --------------->
-    <div class="col-lg-6 card-body shadow-sm">
-        <div class="h-100 shadow-sm mx-5" id="wrapper"> 
-            <!----------LOGO SIDE---------->
-            <h1 class="mb-4">Forgot Password</h1>
-            <form action="functions/authcode.php" method="POST">
-                <div class="input-box row-md-4 mb-3"> 
-                    <input type="text" placeholder="Email" name="email" required>
-                </div>
-                <div class="row-md-4 mb-2 btn"> 
-                    <button type="submit" name="forgotPass" class="textBtn" style="margin-bottom: 10px; margin-top: 10px">Send Reset Link</button> 
-                </div>
-                <div class="back row-md-4 mb-2"> 
-                    <a href="index.php" class="backTo">Back to Login</a>
-                </div>
-            </form>
+<!--------------- CSS --------------->
+<link rel="stylesheet" href="assets/css/login.css">    
+<div class="container-fluid vh-100 g-0">
+    <div class="row vh-100 g-0">
+        <!--------------- LEFT SIDE --------------->
+        <div class="col-lg-7 position-relative d-none d-lg-block">
+            <div class="bg-holder" style="background-image: url(assets/images/loginPic.png);"></div>
         </div>
-    </div>
-</div>  
-<!--------------- ALERTIFY JS --------------->
-<script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
-<script>
-    <?php
-        if(isset($_SESSION['message'])){ // CHECK IF SESSION MESSAGE VARIABLE IS SET
-    ?>
-    alertify.alert('AquaFlow', '<?= $_SESSION['message']?>').set('modal', true).set('movable', false); // DISPLAY MESSAGE MODAL
-    <?php
-        unset($_SESSION['message']); // UNSET THE SESSION MESSAGE VARIABLE
-        }
-    ?>
-</script>
+        <!--------------- RIGHT SIDE --------------->
+        <div class="col-lg-5 d-flex align-items-center justify-content-center">
+            <div class="container px-4">
+                <div class="row justify-content-center">
+                    <div class="col-md-8 col-lg-8">
+                        <h1 class="title text-center mb-4" style="font-size:32px">Forgot Password</h1>
+                        <form action="functions/authcode.php" method="POST">
+                            <div class="input-box mb-3">
+                                <input type="text" class="form-control" placeholder="Enter email" name="email" required>
+                            </div>
+                            <button type="submit" name="forgotPass" class="btn btn-primary w-100">Submit</button> 
+                            <div class="register-link text-center mt-3">
+                                <p class="text"><a href="index.php">Back to Login</a></p>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>  
+</div>
 <!--------------- FOOTER --------------->
 <?php include('includes/footer.php');?>

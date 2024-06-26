@@ -22,12 +22,12 @@ if(isset($_POST['profileUpdateBtn'])){
     $stmt->bind_param("sssi", $name, $phone, $address, $user_id);
         
         if ($stmt->execute()) {
-            $_SESSION['message'] = "Profile Updated Successfully";
+            $_SESSION['success'] = "✔ Profile updated successfully!";
             header("Location: ../profile.php");
             exit();
         } else {
             // Update failed
-            $_SESSION['message'] = "Profile Update Failed";
+            $_SESSION['error'] = "Updating profile failed!";
             header("Location: ../profile.php");
             exit();
         }
@@ -44,7 +44,7 @@ if(isset($_POST['profileUpdateBtn'])){
     // CHECK IF EMAIL EXISTS IN DATABASE
     if ($email_check_sql_run->num_rows > 0) {
         // EMAIL NOT REGISTERED, REDIRECT TO REGISTRATION PAGE WITH MESSAGE
-        $_SESSION['message'] = "Email already regisstered!";
+        $_SESSION['error'] = "Email already regisstered!";
         header('Location: ../emailpage.php');
         exit();
     }
@@ -98,18 +98,20 @@ if(isset($_POST['profileUpdateBtn'])){
         // CHECK IF STATEMENT EXECUTED SUCCESSFULLY
         if ($stmt) {
             // REDIRECT TO VERIFICATION PAGE WITH SUCCESS MESSAGE
-            $_SESSION['message'] = "Verification Code Sent to Email";
+            $_SESSION['success'] = "Verification code sent to email!";
             header("Location: ../verify_email.php?email=" . urlencode($email) );
             exit();
         } else {
             // REDIRECT TO INDEX PAGE WITH ERROR MESSAGE
-            $_SESSION['message'] = "Error";
+            $_SESSION['error'] = "Failed to send verification code!";
             header('Location: ../emailpage.php');
             exit();
         }
     } catch (Exception $e) {
         // HANDLE MAIL SENDING ERROR
-        echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
+        $_SESSION['error'] = "Message could not be sent. Mailer Error: {$mail->ErrorInfo}!";
+        header('Location: ../emailpage.php');
+        exit();
     } finally {
         $con->close(); // CLOSE THE DATABASE CONNECTION
     }
@@ -137,22 +139,22 @@ if(isset($_POST['profileUpdateBtn'])){
                  if($delete_code_query){
                      unset($_SESSION['id']);
                      unset($_SESSION['email']);
-                     $_SESSION['message'] = "Email Updated Successfully";
+                     $_SESSION['success'] = "✔ Email updated successfully";
                      header("Location: ../manageAccount.php");
                      exit();
                  }
              } else {
-                 $_SESSION['message'] = "Email Update Failed";
+                 $_SESSION['error'] = "Failed to update email!";
                  header("Location: ../manageAccount.php");
                  exit();
              }
          } else {
-             $_SESSION['message'] = "Verification Code does not match . $stored_code . $code . $id . $user_id";
+             $_SESSION['error'] = "Verification code does not match!";
              header("Location: ../verify_email.php?email=" . urlencode($email) . "&user_id=" . $user_id);
              exit();
          }
      } else {
-         $_SESSION['message'] = "Error retrieving verification code";
+         $_SESSION['error'] = "Error retrieving verification code!";
          header("Location: ../emailpage.php");
          exit();
      }
@@ -213,23 +215,25 @@ if(isset($_POST['profileUpdateBtn'])){
             // CHECK IF STATEMENT EXECUTED SUCCESSFULLY
             if ($stmt) {
                 // REDIRECT TO VERIFICATION PAGE WITH SUCCESS MESSAGE
-                $_SESSION['message'] = "Verification Code Sent to Email";
+                $_SESSION['success'] = "Verification code sent to email!";
                 header("Location: ../verify_pass.php?email=" . urlencode($email) );
                 exit();
             } else {
                 // REDIRECT TO INDEX PAGE WITH ERROR MESSAGE
-                $_SESSION['message'] = "Error";
+                $_SESSION['error'] = "Failed to send verification code!";
                 header('Location: ../manageAccount.php');
                 exit();
             }
         } catch (Exception $e) {
             // HANDLE MAIL SENDING ERROR
-            echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
+            $_SESSION['error'] = "Message could not be sent. Mailer Error: {$mail->ErrorInfo}!";
+            header('Location: ../manageAccount.php');
+            exit();
         } finally {
             $con->close(); // CLOSE THE DATABASE CONNECTION
         }
     } else {
-        $_SESSION['message'] = "Cannot find email";
+        $_SESSION['error'] = "Cannot find email";
         header("Location: ../manageAccount.php?email=" . urlencode($email));
         exit();
     }
@@ -240,7 +244,7 @@ if(isset($_POST['profileUpdateBtn'])){
 
     if (empty($code)) {
         // SET ERROR MESSAGE AND REDIRECT TO forgot-passVerify.php WITH EMAIL PARAMETER
-        $_SESSION['message'] = "Please fill in all fields";
+        $_SESSION['error'] = "Please fill in all fields!";
         header("Location: ../forgot-passVerify.php?email=" . urlencode($email));
         exit();
     }
@@ -267,19 +271,19 @@ if(isset($_POST['profileUpdateBtn'])){
             if($delete_code_query){
                 // SET SUCCESS MESSAGE AND REDIRECT TO changePassword.php WITH EMAIL AND USER ID PARAMETERS
                 unset($_SESSION['id']);
-                $_SESSION['message'] = "Verification Correct";
+                $_SESSION['success'] = "✔ Verification code correct!";
                 header("Location: ../passwordpage.php?email=" . urlencode($email));
                 exit();
             }
         } else {
             // SET ERROR MESSAGE AND REDIRECT TO forgot-passVerify.php WITH EMAIL PARAMETER
-            $_SESSION['message'] = "Incorrect Verification Code! Please try again.";
+            $_SESSION['error'] = "Incorrect Verification Code! Please try again.";
             header("Location: ../verify_pass.php?email=" . urlencode($email));
             exit();
         }
     } else {
         // SET ERROR MESSAGE AND REDIRECT TO INDEX.PHP
-        $_SESSION['message'] = "No verification code found for the provided email and user ID.";
+        $_SESSION['error'] = "No verification code found for the provided email!";
         header("Location: ../manageAccount.php");
         exit();
     }
@@ -300,18 +304,18 @@ if(isset($_POST['profileUpdateBtn'])){
         // EXECUTE UPDATE QUERY
         if ($stmt->execute()) {
             // SET SUCCESS MESSAGE AND REDIRECT TO INDEX.PHP
-            $_SESSION['message'] = "Password Updated Successfully";
+            $_SESSION['success'] = "✔ Password Updated Successfully";
             header("Location: ../manageAccount.php");
             exit();
         } else {
             // SET ERROR MESSAGE AND REDIRECT TO forgot-passVerify.php WITH EMAIL PARAMETER
-            $_SESSION['message'] = "Failed to update password. Please try again.";
+            $_SESSION['error'] = "Failed to update password. Please try again!";
             header("Location: ../passwordpage.php?email=" . urlencode($email));
             exit();
         }
     } else {
         // SET ERROR MESSAGE AND REDIRECT TO forgot-passVerify.php WITH EMAIL PARAMETER
-        $_SESSION['message'] = "Passwords do not match." . $email;
+        $_SESSION['error'] = "Passwords do not match!";
         header("Location: ../passwordpage.php?email=" . urlencode($email));
         exit();
     }

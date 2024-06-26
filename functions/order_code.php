@@ -30,7 +30,7 @@ function getItemsCart($userId) {
 if(isset($_POST['cartBtn'])){ // CHECK IF THE 'cartBtn' IS SET IN THE POST REQUEST
     // RETRIEVE SELECTED PRODUCT, CATEGORY, AND QUANTITY FROM POST REQUEST
     if(!isset($_SESSION['user_id'])){
-        $_SESSION['message'] = "Please log in to add items to your cart.";
+        $_SESSION['error'] = "Please log in to add items to your cart!";
         header('Location: ../homepage.php');
         exit; // Terminate further execution
     }
@@ -44,7 +44,7 @@ if(isset($_POST['cartBtn'])){ // CHECK IF THE 'cartBtn' IS SET IN THE POST REQUE
 
     // Validate if product and category are selected
     if(empty($productId) || empty($categoryId)){ // CHECK IF PRODUCT ID OR CATEGORY ID IS EMPTY
-        $_SESSION['message'] = "Please choose both a product and a category!";
+        $_SESSION['error'] = "Please choose both a product and a category!";
         header('Location: ../order.php');
         exit; // Terminate further execution
     }
@@ -56,12 +56,12 @@ if(isset($_POST['cartBtn'])){ // CHECK IF THE 'cartBtn' IS SET IN THE POST REQUE
     if ($productCheck_query) {
         if (mysqli_num_rows($productCheck_query) > 0) {
             // Product with the same category exists in cart_items
-            $_SESSION['message'] = "This item is already in your cart.";
+            $_SESSION['error'] = "This item is already in your cart!";
             header('Location: ../order.php');
             exit;
         }
     } else {
-        $_SESSION['message'] = "Error checking existing product in cart: " . mysqli_error($con);
+        $_SESSION['error'] = "Error checking existing product in cart: " . mysqli_error($con) . "!";
         header('Location: ../order.php');
         exit;
     }
@@ -104,26 +104,25 @@ if(isset($_POST['cartBtn'])){ // CHECK IF THE 'cartBtn' IS SET IN THE POST REQUE
             $updateSuccess = mysqli_stmt_execute($stmt);
 
             if ($updateSuccess) {
-                $_SESSION['message'] = "ITEM ADDED TO CART SUCCESSFULLY!";
+                $_SESSION['success'] = "✔ Item added to cart successfully!";
                 header('Location: ../cart.php');
                 exit;
             } else {
-                $_SESSION['message'] = "Failed to update product quantity.";
-                header('Location: ../order.php');
+                $_SESSION['error'] = "Failed to update product quantity!";
+                header('Location: ../cart.php');
                 exit;
             }
         } else {
-            $_SESSION['message'] = "Error adding item to cart: " . mysqli_error($con);
-            header('Location: ../order.php');
+            $_SESSION['error'] = "Error adding item to cart: " . mysqli_error($con) . "!";
+            header('Location: ../cart.php');
             exit;
         }
     } else {
         // Handle the case when product or category data cannot be fetched
-        $_SESSION['message'] = "Failed to fetch product or category data.";
-        header('Location: ../admin/index.php');
+        $_SESSION['error'] = "Failed to fetch product or category data!";
+        header('Location: ../crt.php');
     }
-}
- else if(isset($_POST['deleteOrderBtn'])){
+} else if(isset($_POST['deleteOrderBtn'])){
     $cart_id = $_POST['cart_id'];
 
     foreach($_POST as $key => $value) {
@@ -145,7 +144,7 @@ if(isset($_POST['cartBtn'])){ // CHECK IF THE 'cartBtn' IS SET IN THE POST REQUE
             $delete_query_run = mysqli_query($con, $delete_query);
 
             if($updateProductQuantitiesResult && $delete_query_run){
-                $_SESSION['message'] = "✔ Cart Item Deleted Successfully";
+                $_SESSION['success'] = "✔ Cart Item Deleted Successfully";
                 header('Location: ../cart.php');
                 exit; 
             } else{
@@ -162,7 +161,7 @@ if(isset($_POST['cartBtn'])){ // CHECK IF THE 'cartBtn' IS SET IN THE POST REQUE
 } else if(isset($_POST['placeOrderBtn'])) {
     // Check if the user is logged in
     if (!isset($_SESSION['user_id'])) {
-        $_SESSION['message'] = "Please log in to add items to your cart.";
+        $_SESSION['error'] = "Please log in to add items to your cart!";
         header('Location: ../homepage.php');
         exit;
     }
@@ -449,44 +448,51 @@ if(isset($_POST['cartBtn'])){ // CHECK IF THE 'cartBtn' IS SET IN THE POST REQUE
                         // If deletion fails, rollback
                         if (!$deleteCartItemsSuccess) {
                             mysqli_rollback($con);
-                            $_SESSION['message'] = "Failed to delete cart items.";
+                            $_SESSION['error'] = "Failed to delete cart items!";
                             header('Location: ../cart.php');
                             exit;
                         }
                     
                         mysqli_commit($con);
-                        $_SESSION['message'] = "Order placed successfully. Order ID: $orderId, Subtotal: $subtotal, Additional Fee: $additionalFee, Grand Total: $grandTotal";
+                        $_SESSION['success'] = "✔ Order placed successfully!";
                         unset($_SESSION['cart']); // Clear the cart after successful order placement
                         header('Location: ../payment.php?id=' . $orderId);
                         exit;
                     } catch (Exception $e) {
                         // HANDLE MAIL SENDING ERROR
-                        echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
+                        $_SESSION['error'] = "Message could not be sent. Mailer Error: {$mail->ErrorInfo}!";
+                        header('Location: ../cart.php');
+                        exit;
                     } finally {
                         $con->close(); // CLOSE THE DATABASE CONNECTION
                     }
                 } else {
-                    echo "No order found with ID: $order_id";
+                    $_SESSION['error'] = "No order found with ID: $order_id!";
+                    header('Location: ../cart.php');
+                    exit;
                 }
             } else {
-                echo "Error retrieving order details: " . mysqli_error($con);
+                $_SESSION['error'] = "Error retrieving order details: " . mysqli_error($con) . "!";
+                header('Location: ../cart.php');
+                exit;
             }
             } else {
-                echo "Failed to retreive order details: " . mysqli_error($con);
-            }
-                
+                $_SESSION['error'] = "Failed to retreive order details: " . mysqli_error($con) . "!";
+                header('Location: ../cart.php');
+                exit;
+            }     
         } else {
-            $_SESSION['message'] = "Cannot find email";
-            header("Location: ../manageAccount.php?email=" . urlencode($email));
-            exit();
+            mysqli_rollback($con);
+            $_SESSION['error'] = "Failed to place order items!";
+            header('Location: ../cart.php');
+            exit;
         }
-    } else {
+     } else {
         mysqli_rollback($con);
-        $_SESSION['message'] = "Failed to add order items.";
+        $_SESSION['error'] = "Failed to place order items!";
         header('Location: ../cart.php');
         exit;
     }
-
 } else if(isset($_POST['cancelOrderBtn'])){
     $order_id = $_POST['order_id'];
 
@@ -552,16 +558,15 @@ if(isset($_POST['cartBtn'])){ // CHECK IF THE 'cartBtn' IS SET IN THE POST REQUE
         mysqli_stmt_bind_param($statement5, "i", $order_id);
         $delete_items_query_run = mysqli_stmt_execute($statement5);
 
-        $_SESSION['message'] = "Order Cancelled!";
+        $_SESSION['success'] = "✔ Order cancelled successfully!";
         header('Location: ../purchases.php');
         exit;
     
     } else{
-        $_SESSION['message'] = "Error: " . mysqli_error($con);
+        $_SESSION['error'] = "Error: " . mysqli_error($con) . "!";
         header('Location: ../purchases.php');
         exit;
     }
 }
-
 ob_end_flush();
 ?>

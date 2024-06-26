@@ -164,19 +164,6 @@ if(mysqli_num_rows($productsResult) > 0) {
         </div>
     </div>
 </section>
-
-<!-- Alertify JS -->
-<script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
-<script>
-    <?php
-    if(isset($_SESSION['message'])){ // CHECK IF SESSION MESSAGE VARIABLE IS SET
-  ?>
-    alertify.alert('AquaFlow', '<?= $_SESSION['message']?>').set('modal', true).set('movable', false); // DISPLAY MESSAGE MODAL
-  <?php
-    unset($_SESSION['message']); // UNSET THE SESSION MESSAGE VARIABLE
-  }
-  ?>
-</script>
 <script>
 $(document).ready(function () {
     $('.increment-btn').click(function (e) {

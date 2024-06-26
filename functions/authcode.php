@@ -28,7 +28,7 @@
         // VALIDATION
         if (empty($name) || empty($email) || empty($phone) || empty($address) || empty($password) || empty($confirm_password)) {
             // IF ANY FIELD IS EMPTY, SET ERROR MESSAGE AND REDIRECT TO REGISTER PAGE
-            $_SESSION['message'] = "Please fill in all fields";
+            $_SESSION['error'] = "Please fill in all fields!";
             header("Location: ../register.php");
             exit();
         }
@@ -46,7 +46,7 @@
 
             if($email_check_sql->num_rows > 0){
                 // IF EMAIL EXISTS, SET ERROR MESSAGE AND REDIRECT TO REGISTER PAGE
-                $_SESSION['message'] = "Email already exists";
+                $_SESSION['error'] = "Email already exists!";
                 header("Location: ../register.php");
                 exit();
             }
@@ -98,10 +98,10 @@
                 $stmt->execute();
 
                 // Retrieve the newly inserted user_id
-                $user_id = mysqli_insert_id($con);
+                $id = mysqli_insert_id($con);
 
                 // Store user_id in session for later use
-                $_SESSION['user_id'] = $user_id;
+                $_SESSION['user_id'] = $id;
 
                 // Redirect to verification page with email
                 header("Location: ../verification.php?email=" . urlencode($email));
@@ -111,13 +111,13 @@
                 echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
             }
         } else {
-            $_SESSION['message'] = "Password does not match";
-            header("Location: ../register.php");
+            $_SESSION['error'] = "Password does not match!";
+            header("Location: ../verification.php");
             exit();
         }
-    } else if (isset($_SESSION['registration_data']['user_id'])) {
+    } else if (isset($_SESSION['registration_data'])) {
         // REGISTRATION DATA EXISTS IN SESSION
-        $user_id = $_SESSION['registration_data']['user_id'];
+        $user_id = $_SESSION['registration_data'];
         $registration_data = $_SESSION['registration_data'];
         $name = $registration_data["name"];
         $email = $registration_data["email"];
@@ -133,7 +133,7 @@
         
             if (empty($code)) {
                 // IF CODE IS EMPTY, SET ERROR MESSAGE AND REDIRECT TO VERIFICATION PAGE
-                $_SESSION['message'] = "Please fill in all fields";
+                $_SESSION['error'] = "Please fill in all fields!";
                 header("Location: ../verification.php?email=" . urlencode($email));
                 exit();
             }
@@ -142,15 +142,15 @@
             $con = mysqli_connect("localhost:3306", "root", "", "aquaflowdb");
             if (!$con) {
                 // HANDLE ERROR IF CONNECTION FAILS
-                $_SESSION['message'] = "Database connection failed: " . mysqli_connect_error();
+                $_SESSION['error'] = "Database connection failed: " . mysqli_connect_error();
                 header("Location: ../register.php");
                 exit();
             }
             
             // QUERY TO RETRIEVE USER ID AND VERIFICATION CODE
-            $query = "SELECT verification_code FROM verification_codes WHERE email = ? AND id= ?";
+            $query = "SELECT verification_code FROM verification_codes WHERE email = ?";
             $stmt = $con->prepare($query);
-            $stmt->bind_param("si", $email, $user_id);
+            $stmt->bind_param("s", $email);
             $stmt->execute();
             $result = $stmt->get_result();
             
@@ -166,7 +166,7 @@
                     $stmt = $con->prepare($sql);
                     if (!$stmt) {
                         // HANDLE ERROR IF PREPARE STATEMENT FAILS
-                        $_SESSION['message'] = "Prepare statement error: " . $con->error;
+                        $_SESSION['error'] = "Prepare statement error: " . $con->error;
                         header("Location: ../register.php");
                         exit();
                     }
@@ -175,25 +175,24 @@
                     $stmt->execute();
                     // UNSET THE USER ID AND REGISTRATION DATA SESSION VARIABLES AFTER SUCCESSFUL REGISTRATION
 
-                    $delete_code = "DELETE FROM verification_codes WHERE email='$email' AND id='$user_id'";
+                    $delete_code = "DELETE FROM verification_codes WHERE email='$email'";
                     $delete_code_query = mysqli_query($con, $delete_code);
     
                     if($delete_code_query){
                         // UNSET THE USER ID AND REGISTRATION DATA SESSION VARIABLES AFTER SUCCESSFUL REGISTRATION
                         unset($_SESSION['registration_data']);
-                        unset($_SESSION['user_id']);
-                        $_SESSION['message'] = "Registered Successfully";
+                        $_SESSION['success'] = "Registered Successfully!";
                         header("Location: ../register.php");
                         exit();
                     }
                 } else {
-                    $_SESSION['message'] = "Incorrect Verification Code! Please try again.";
-                    header("Location: ../register.php?email=" . urlencode($email));
+                    $_SESSION['error'] = "Incorrect Verification Code! Please try again.";
+                    header("Location: ../verification.php?email=" . urlencode($email));
                     exit();
                 }
             } else {
                 // IF NO VERIFICATION CODE FOUND, SET ERROR MESSAGE AND REDIRECT TO REGISTRATION PAGE
-                $_SESSION['message'] = "No verification code found for the provided email: $email";
+                $_SESSION['error'] = "No verification code found for the provided email: $email!";
                 header("Location: ../register.php");
                 exit();
             }
@@ -203,6 +202,12 @@
         $email = $_POST['email'];
         $password = $_POST['password'];
 
+        if (empty($email) || empty($password)) {
+            // IF ANY FIELD IS EMPTY, SET ERROR MESSAGE AND REDIRECT TO REGISTER PAGE
+            $_SESSION['error'] = "Please fill in all fields!";
+            header("Location: ../index.php");
+            exit();
+        }
        
         // PREPARE SQL QUERY TO CHECK IF EMAIL EXISTS IN THE DATABASE
         $login_query = "SELECT * FROM users WHERE email=?";
@@ -232,21 +237,21 @@
                 
                 // Redirect based on user role
                 if($role == 1) {
-                    $_SESSION['message'] = "Welcome to Admin Dashboard";
+                    $_SESSION['success'] = "Welcome to Admin Dashboard!";
                     header('Location: ../admin/index.php');
                 } else {
-                    $_SESSION['message'] = "Logged in Successfully";
+                    $_SESSION['success'] = "Logged in Successfully!";
                     header('Location: ../homepage.php');
                 }
             } else {
                 // SET ERROR MESSAGE FOR INCORRECT PASSWORD
-                $_SESSION['message'] = "Incorrect Password";
+                $_SESSION['error'] = "Incorrect Password!";
                 header("Location: ../index.php");
                 exit();
             }
         } else {
             // SET ERROR MESSAGE FOR INVALID CREDENTIALS
-            $_SESSION['message'] = "Invalid Credentials";
+            $_SESSION['error'] = "Email not Registered!";
             header('Location: ../index.php');
             exit();
         }
@@ -265,7 +270,7 @@
         // CHECK IF EMAIL EXISTS IN DATABASE
         if ($email_check_sql_run->num_rows == 0) {
             // EMAIL NOT REGISTERED, REDIRECT TO REGISTRATION PAGE WITH MESSAGE
-            $_SESSION['message'] = "Email not registered. Register first!";
+            $_SESSION['error'] = "Email not registered. Register first!";
             header('Location: ../register.php');
             exit();
         }
@@ -318,18 +323,20 @@
             // CHECK IF STATEMENT EXECUTED SUCCESSFULLY
             if ($stmt) {
                 // REDIRECT TO VERIFICATION PAGE WITH SUCCESS MESSAGE
-                $_SESSION['message'] = "Verification Code Sent to Email";
+                $_SESSION['success'] = "Verification code sent to email";
                 header("Location: ../forgot-passVerify.php?email=" . urlencode($email) );
                 exit();
             } else {
                 // REDIRECT TO INDEX PAGE WITH ERROR MESSAGE
-                $_SESSION['message'] = "Error";
+                $_SESSION['error'] = "Error sending email!";
                 header('Location: ../index.php');
                 exit();
             }
         } catch (Exception $e) {
             // HANDLE MAIL SENDING ERROR
-            echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
+            $_SESSION['error'] = "Message could not be sent. Mailer Error: {$mail->ErrorInfo}!";
+            header('Location: ../index.php');
+            exit();
         } finally {
             $con->close(); // CLOSE THE DATABASE CONNECTION
         }
@@ -343,7 +350,7 @@
         // CHECK IF ANY FIELD IS EMPTY
         if (empty($code)) {
             // SET ERROR MESSAGE AND REDIRECT TO forgot-passVerify.php WITH EMAIL PARAMETER
-            $_SESSION['message'] = "Please fill in all fields";
+            $_SESSION['error'] = "Please fill in all fields!";
             header("Location: ../forgot-passVerify.php?email=" . urlencode($email));
             exit();
         }
@@ -380,19 +387,19 @@
                 if($delete_code_query){
                     // SET SUCCESS MESSAGE AND REDIRECT TO changePassword.php WITH EMAIL AND USER ID PARAMETERS
                     unset($_SESSION['user_id']);
-                    $_SESSION['message'] = "Verification Correct";
+                    $_SESSION['success'] = "Verification code correct!";
                     header("Location: ../changePassword.php?email=" . urlencode($email));
                     exit();
                 }
             } else {
                 // SET ERROR MESSAGE AND REDIRECT TO forgot-passVerify.php WITH EMAIL PARAMETER
-                $_SESSION['message'] = "Incorrect Verification Code! Please try again.";
+                $_SESSION['error'] = "Incorrect verification code! Please try again!";
                 header("Location: ../forgot-passVerify.php?email=" . urlencode($email));
                 exit();
             }
         } else {
             // SET ERROR MESSAGE AND REDIRECT TO INDEX.PHP
-            $_SESSION['message'] = "No verification code found for the provided email and user ID.";
+            $_SESSION['error'] = "No verification code found for the provided email!";
             header("Location: ../index.php");
             exit();
         }
@@ -416,18 +423,18 @@
             // EXECUTE UPDATE QUERY
             if ($stmt->execute()) {
                 // SET SUCCESS MESSAGE AND REDIRECT TO INDEX.PHP
-                $_SESSION['message'] = "Password Updated Successfully";
+                $_SESSION['success'] = "Password updated successfully!";
                 header("Location: ../index.php");
                 exit();
             } else {
                 // SET ERROR MESSAGE AND REDIRECT TO forgot-passVerify.php WITH EMAIL PARAMETER
-                $_SESSION['message'] = "Failed to update password. Please try again.";
+                $_SESSION['error'] = "Failed to update password. Please try again!";
                 header("Location: ../forgot-passVerify.php?email=" . urlencode($email));
                 exit();
             }
         } else {
             // SET ERROR MESSAGE AND REDIRECT TO forgot-passVerify.php WITH EMAIL PARAMETER
-            $_SESSION['message'] = "Passwords do not match or email is missing.";
+            $_SESSION['error'] = "Passwords do not match!";
             header("Location: ../forgot-passVerify.php?email=" . urlencode($email));
             exit();
         }
@@ -490,24 +497,22 @@
             // CHECK IF MESSAGE WAS INSERTED SUCCESSFULLY
             if ($stmt) {
                 // SET SUCCESS MESSAGE AND REDIRECT TO homepage.php
-                $_SESSION['message'] = "Message sent successfully";
+                $_SESSION['success'] = "Message sent successfully!";
                 header("Location: ../homepage.php");
                 exit();
             } else {
                 // SET ERROR MESSAGE AND REDIRECT TO homepage.php
-                $_SESSION['message'] = "Something went wrong.";
+                $_SESSION['error'] = "Sending message failed!";
                 header('Location: ../homepage.php');
                 exit();
             }
         } catch (Exception $e) {
             // DISPLAY MAILER ERROR IF MESSAGE COULD NOT BE SENT
-            echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
+            $_SESSION['error'] = "Message could not be sent. Mailer Error: {$mail->ErrorInfo}!";
+            header('Location: ../homepage.php');
+            exit();
         } finally {
             // CLOSE DATABASE CONNECTION
             $con->close();
         }
-    } else {
-        $_SESSION['message'] = "Invalid request.";
-        header("Location: ../index.php");
-        exit();
     }

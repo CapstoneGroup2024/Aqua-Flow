@@ -16,12 +16,6 @@ if ($user_query_run) {
     if ($recentlyAddedResult) {
         $recentlyAddedRow = $recentlyAddedResult->fetch_assoc();
         $newUsersCount = $recentlyAddedRow['new_users'];
-
-        if ($newUsersCount > 0) {
-            echo "<div class='alert alert-success' role='alert'>";
-            echo "New user(s) just added!";
-            echo "</div>";
-        }
     } else {
         echo "Error checking recent additions: " . $con->error;
     }

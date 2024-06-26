@@ -10,11 +10,6 @@
         $query = "SELECT * FROM $table WHERE id='$id'"; // SQL QUERY O SELECT ALL DATA FROM THE TABLE WHERE ID MATCHES THE PROVIDED ID
         return $query_run = mysqli_query($con, $query); // EXECUTE QUERY AND RETURN RESULT
     }
-    function redirect($url, $message){ // PASS URL AND MESSAGE PARAMETERS
-        $_SESSION['message'] = $message; // MESSAGE
-        header('Location: '.$url); // REDIRECT
-        exit();
-    }
     function getCartItemsByUserId($userId) {
         global $con;
     

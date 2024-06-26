@@ -246,22 +246,15 @@ table, tr,td,th{
 
 /* Style for hover effect */
 .CheckMe:hover {
-  background-color: #aad7f6;
+  background-color: #2492DA;
 }
 
 /* Style for checked state */
 .CheckMe:checked {
-  background-color: #aad7f6 !important;
+  background-color: #2492DA !important;
   border-color: #6a6a66 !important;
   color: #013d67 !important;
 }
-
-/* Styling the check icon */
-.CheckMe:checked::before {
-  content: "\2713"; /* Unicode for check mark */
-  color: #013d67; /* Color of the check mark */
-}
-
 
   </style>
 </head>

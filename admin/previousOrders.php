@@ -60,7 +60,7 @@ $orders = getOrderTime("order_transac", "Completed");
                                         while ($order = mysqli_fetch_assoc($orders['pastOrders'])) {
                                     ?>
                                     <tr style="text-align: center; vertical-align: middle;">
-                                        <td><?= $order['order_id']; ?></td>
+                                        <td><?= $order['order_transac_id']; ?></td>
                                         <td class="d-none d-lg-table-cell"><?= $order['user_name']; ?></td>
                                         <td class="d-none d-lg-table-cell"><?= $order['product_name']; ?></td>
                                         <td class="d-none d-lg-table-cell"><?= formatDate($order['order_at']); ?></td>

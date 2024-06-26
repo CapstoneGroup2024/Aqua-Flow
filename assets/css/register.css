@@ -1,209 +1,104 @@
-/* ------------------- FONTS ------------------- */
-@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Suez+One&family=Sumana:wght@400;700&display=swap');
-* {
-    font-family: "Sumana", serif;
-    font-family: "Suez One", serif;
-    font-family: "Poppins", sans-serif;
+/* General Styles */
+body, html {
+    height: 100%;
     margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-/* ------------------- Body ------------------- */
-body {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    background-color: #FFFFFF;/* Adjusted background color for a softer look */
-}
-@media (min-width: 768px) {
-    body {
-        overflow-y: hidden; /* Hide scrollbar on larger devices */
-    }
-}
-/* ------------------- CONTAINER ------------------- */
-.Register {
-    margin-top: 40px;
-    margin-bottom: 10px;
-    width: 1080px;
-    background-color: #FFFFFF;
-    border: none;
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1), 0 6px 6px rgba(0, 0, 0, 0.1);
-    border-radius: 20px;
-    padding: 15px 30px;
-}
-@media all and (max-width: 991px) {
-    .Register {
-        margin-top: 40px;
-        margin-bottom: 100px;
-        width: 1080px;  
-        border: none;
-        box-shadow: none;
-        border-radius: 20px;
-        padding: 30px 40px;
-    }
+    font-family: 'Poppins', sans-serif;
+    background-image: url('../images/regBg.jpg'); /* Replace with your image path */
+    background-size: cover; /* Ensures the background image covers the entire viewport */
+    background-repeat: no-repeat; /* Prevents the background image from repeating */
+    background-position: center; /* Centers the background image */
 }
 
-/* ------------------- HEADING ------------------- */
-.heading {
-    margin-top: 5px;
-    margin-bottom: 40px;
-    text-align: center;
-    color: #013D67;
-    font-family: "Suez One";
-}
-/* --------------- REGISTRATION FORM --------------- */
-.regform {
-    width: 100%;
+
+.register-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 40px;
+    background-color: #fff;
+    border-radius: 15px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2), 0 4px 10px rgba(0, 0, 0, 0.1);
     position: relative;
-    font-size: large;
-    font-weight: bolder;
+    top: 20px;
+    z-index: 1;
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+.register-container:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2), 0 8px 16px rgba(0, 0, 0, 0.1);
+}
+
+.heading {
+    font-size: 2.5rem;
+    font-weight: 700;
     color: #013D67;
 }
-.regform input {
-    width: 95%;
-    height: 100%;
-    background-color: #DEEFF5;
-    border: 2px solid rgba(0, 0, 0, 0.2);/* Set initial border to transparent */
-    border-radius: 12px;
-    font-size: 14px;
-    color: #013D67;
-    padding: 20px 45px 20px 20px;
+
+.form-label {
+    font-size: 1rem;
+    color: #333;
+}
+
+.form-control {
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    padding: 10px;
+    transition: border-color 0.3s ease;
+}
+
+.form-control:focus {
+    border-color: #89c5f1;
     outline: none;
-    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.3s ease; /* Add transition for border-color */
-    margin-top: 10px;
-    margin-bottom: 14px;
 }
-.regform input:hover {
-    transform: scale(1.04);
-    border-color: #013D67; /* Change border color on hover */
+
+#message {
+    font-size: 0.9rem;
+    color: #666;
 }
-.register-link {
-    text-align: center;
-    margin-top: 20px;
-    color: #013D67;
-    font-weight: 600;
+
+.btn {
+    padding: 10px 20px;
+    border-radius: 6px;
+    font-size: 1rem;
 }
+
 .register-link a {
     color: #013D67;
     text-decoration: none;
-    font-weight: 800;
+    position: relative;
+    display: inline-block;
 }
-.register-link a:hover {
-    text-decoration: underline;
-}
-/* ------------------- SUBMIT BUTTON ------------------- */
-.btn-container {
-    text-align: center; /* Align the button container's content center */
-    margin: 0 auto; /* Center the button container horizontally */
-    background: #61A5C2;
-    width: 340px;
-    height: 45px;
-    border: none;
-    border-radius: 12px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    cursor: pointer;
-    font-weight: bolder;
-    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1); /* Smoother transition */
-}
-.button-text {
-    color: #FFFFFF;
-    font-weight: bold;
-    border: none;
-    margin-top: 10px;
-    background-color: #61A5C2;;
-}
-.btn-container:hover {
-    transform: scale(1.05);
-    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2); /* Increased shadow on hover */
-}
-/* ------------------- PASSWORD INDICATOR ------------------- */
-#message{
+
+.register-link a::after {
+    content: '';
     position: absolute;
-    bottom: 85px;
-    color: #fff;
-    font-size: 15px;
-    display: none;
+    width: 100%;
+    transform: scaleX(0);
+    height: 2px;
+    bottom: 0;
+    left: 0;
+    background-color: #013D67;
+    transform-origin: bottom right;
+    transition: transform 0.25s ease-out;
 }
 
-@media (min-width: 500px)  {
-    .Register {
-        margin-top: 400px;
-        margin-bottom: 10px;
-        width: 1080px;
-        background-color: #FFFFFF;
-        border: none;
-        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1), 0 6px 6px rgba(0, 0, 0, 0.1);
-        border-radius: 12px;
-        padding: 15px 30px;
-    }
-    .regform input {
-        width: 95%;
-        height: 100%;
-        border-radius: 12px;
-        font-size: 14px;
-        padding: 20px 45px 20px 20px;
-        transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.3s ease; /* Add transition for border-color */
-        margin-top: 10px;
-        margin-bottom: 14px;
-        margin-left: 10px;
-    }
-    .heading {
-       font-size: 36px;
-    }   
+.register-link a:hover::after {
+    transform: scaleX(1);
+    transform-origin: bottom left;
 }
 
-@media (min-width: 768px) {
-    .Register {
-        margin-top: 400px;
-        margin-bottom: 10px;
-        width: 1080px;
-        background-color: #FFFFFF;
-        border: none;
-        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1), 0 6px 6px rgba(0, 0, 0, 0.1);
-        border-radius: 12px;
-        padding: 15px 30px;
-    }
-    .regform input {
-        width: 95%;
-        height: 100%;
-        border-radius: 12px;
-        font-size: 14px;
-        padding: 20px 45px 20px 20px;
-        transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.3s ease; /* Add transition for border-color */
-        margin-top: 10px;
-        margin-bottom: 14px;
-        margin-left: 10px;
-    }
-    .heading {
-       font-size: 36px;
-    }
-}
+.BlueBtn{
+    color: #013D67; 
+    font-size: 18px; 
+    font-family: 'Poppins';
+    font-weight: 500;
+    background-color: #AAD7F6!important;
+  }
 
-
-@media (min-width: 768px){
-    .Register {
-        margin-top: 10px;
-        margin-bottom: 10px;
-        width: 1080px;
-        background-color: #FFFFFF;
-        border: none;
-        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1), 0 6px 6px rgba(0, 0, 0, 0.1);
-        border-radius: 12px;
-        padding: 15px 30px;
-    }
-    .regform input {
-        width: 95%;
-        height: 100%;
-        border-radius: 12px;
-        font-size: 14px;
-        padding: 20px 45px 20px 20px;
-        transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.3s ease; /* Add transition for border-color */
-        margin-top: 10px;
-        margin-bottom: 14px;
-        margin-left: 10px;
-    }
-    .heading {
-       font-size: 36px;
-    }
-}
+  .BlueBtn:hover{
+    color: white; 
+    font-size: 18px; 
+    font-family: 'Poppins';
+    font-weight: 500;
+    background-color: #0b6fda!important;
+  }

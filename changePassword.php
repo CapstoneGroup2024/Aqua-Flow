@@ -3,9 +3,6 @@
     include('includes/header.php');
     session_start();
 ?>
-<!--------------- CSS --------------->
-<link rel="stylesheet" href="assets/css/newPass.css">    
-
 <!--------------- RESTRICT USER ACCESSING THIS PAGE THROUGH URL  --------------->
 <?php 
     if(isset($_SESSION['auth'])){ // CHECKS IF THE USER IS ALREADY LOGGED IN
@@ -15,46 +12,61 @@
     }
 ?>
 
-<div class="row vh-100 g-0">
-    <!--------------- LEFT SIDE --------------->
-    <div class="col-lg-6 position-relative d-none d-lg-block">
-        <div class="bg-holder" style="background-image: url(assets/images/loginPic.png);"></div>
-    </div>
-    <!--------------- RIGHT SIDE --------------->
-    <div class="col-lg-6 card-body shadow-sm"> 
-        <div class="h-100 shadow-sm mx-5" id="wrapper"> 
-            <!----------LOGO SIDE---------->
-            <h1 class="mb-4">Change Passwored</h1>  
-            <form action="functions/authcode.php" method="POST">
-                <div class="input-box row-md-4 mb-3"> 
-                    <p class="form-label">New Password:</p>    
-                    <input type="password" placeholder="Enter New Password" name="newPassword" required>
-                </div>
-                <div class="input-box row-md-4 mb-3"> 
-                    <p class="form-label">Confirm Password:</p>    
-                    <input type="password" placeholder="Confirm Password" name="confirmPassword" required>
-                </div>
-                <div class="row-md-4 mb-2 btn"> 
-                    <button type="submit" name="newPassBtn" class="textBtn" style="margin-bottom: 10px; margin-top: 10px">Submit</button> 
-                </div>
-                <div class="back row-md-4 mb-2"> 
-                    <a href="index.php" class="backTo">Back to Login</a>
-                </div>
-            </form>
+<!--------------- CSS --------------->
+<link rel="stylesheet" href="assets/css/login.css">    
+<div class="container-fluid vh-100 g-0">
+    <div class="row vh-100 g-0">
+        <!--------------- LEFT SIDE --------------->
+        <div class="col-lg-7 position-relative d-none d-lg-block">
+            <div class="bg-holder" style="background-image: url(assets/images/loginPic.png);"></div>
         </div>
-    </div>
-</div>  
-<!--------------- ALERTIFY JS --------------->
-<script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
+        <!--------------- RIGHT SIDE --------------->
+        <div class="col-lg-5 d-flex align-items-center justify-content-center">
+            <div class="container px-4">
+                <div class="row justify-content-center">
+                    <div class="col-md-8 col-lg-8">
+                        <h1 class="title text-center mb-4" style="font-size:30px">Change Password</h1>
+                        <form action="functions/authcode.php" method="POST">
+                            <div class="input-box row-md-4 mb-3"> 
+                                <p class="form-label">New Password:</p>    
+                                <input type="password" id="pass" placeholder="Enter New Password" name="newPassword" required>
+                            </div>
+                            <div class="input-box row-md-4 mb-3">
+                                <label for="type" class="form-label">Confirm Password</label>
+                                <input type="password" name="confirmPassword" class="form-control" id="cpass" placeholder="Confirm password" oninput="checkPasswordStrength()">
+                                <p id="match-message" class="mt-2"></p>
+                            </div>
+                            <button type="submit" name="newPassBtn" class="btn btn-primary w-100">Submit</button> 
+                            <div class="register-link text-center mt-3">
+                                <p class="text"><a href="index.php">Back to Login</a></p>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>  
+</div>
 <script>
-    <?php
-        if(isset($_SESSION['message'])){ // CHECK IF SESSION MESSAGE VARIABLE IS SET
-    ?>
-    alertify.alert('AquaFlow', '<?= $_SESSION['message']?>').set('modal', true).set('movable', false); // DISPLAY MESSAGE MODAL
-    <?php
-        unset($_SESSION['message']); // UNSET THE SESSION MESSAGE VARIABLE
-        }
-    ?>
+        function checkPasswordStrength() {
+            var password = document.getElementById('pass').value;
+            var confirm_password = document.getElementById('cpass').value;
+            var matchMessage = document.getElementById('match-message'); 
+
+            // Password matching validation
+            if (password === confirm_password && password !== '') {
+                document.getElementById('cpass').style.borderColor = 'green';
+                matchMessage.textContent = 'Passwords match.';
+                matchMessage.style.color = 'green';
+            } else if (password === '' && confirm_password === '') {
+                document.getElementById('cpass').style.borderColor = '';
+                matchMessage.textContent = '';
+            } else {
+                document.getElementById('cpass').style.borderColor = 'red';
+                matchMessage.textContent = 'Passwords do not match.';
+                matchMessage.style.color = 'red';
+            }
+    }
 </script>
 <!--------------- FOOTER --------------->
 <?php include('includes/footer.php');?>

@@ -35,7 +35,7 @@
               <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                 <?= $_SESSION['auth_user']['name'] ?>
               </a>
-              <ul class="dropdown-menu">
+              <ul class="dropdown-menu" style="margin-right:20px!important">
                 <li><a class="dropdown-item" href="profile.php">Profile</a></li>
                 <li><a class="dropdown-item" href="manageAccount.php">Manage Account</a></li>
                 <li><a class="dropdown-item" href="logout.php">Log out</a></li>

@@ -54,6 +54,9 @@
         transform: scale(1) rotate(360deg);
       }
     }
+    .dropdown-menu{
+      margin-left: -80px!important;
+    }
   </style>
 </head>
 <body>

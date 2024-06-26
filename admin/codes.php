@@ -34,9 +34,13 @@ if(isset($_POST['addCateg_button'])){ // IF FORM SUBMIT IS FROM addCateg_button
     
     if($categ_query_run){
         move_uploaded_file($_FILES['image']['tmp_name'], $path.'/'.$filename); // MOVE THE UPLOADED IMAGE FILE FROM THE TEMPORARY DIRECTORY TO THE SPECIFIED UPLOAD DIRECTORY WITH GENERATED FILE NAME 
-        redirect("addCategory.php", "✔ Category added successfully"); 
+        $_SESSION['success'] = "✔ Category added successfully!";
+        header("Location: addCategory.php");
+        exit();
     } else{
-        redirect("addCategory.php", "Something went wrong"); 
+        $_SESSION['error'] = "Adding category failed!";
+        header("Location: addCategory.php");
+        exit();
     }
 } else if(isset($_POST['editCateg_button'])){
     $category_id = $_POST['category_id'];
@@ -70,9 +74,13 @@ if(isset($_POST['addCateg_button'])){ // IF FORM SUBMIT IS FROM addCateg_button
                 unlink("../uploads/".$old_image);
             }
         }
-        redirect("category.php","✔ Category Updated Successfully");
+        $_SESSION['success'] = "✔ Category updated successfully!";
+        header("Location: category.php");
+        exit();
     } else{
-        redirect("category.php","Something went wrong");
+        $_SESSION['error'] = "Updating category failed!!";
+        header("Location: category.php");
+        exit();
     }
 } else if(isset($_POST['deleteCategory_button'])){
     $category_id = $_POST['category_id'];
@@ -90,9 +98,13 @@ if(isset($_POST['addCateg_button'])){ // IF FORM SUBMIT IS FROM addCateg_button
         if(file_exists("../uploads/".$image)){
             unlink("../uploads/".$image);
         }
-        redirect("category.php","✔ Category Deleted Successfully");
+        $_SESSION['success'] = "✔ Category deleted successfully!";
+        header("Location: category.php");
+        exit();
     } else{
-        redirect("category.php","Something went wrong");
+        $_SESSION['error'] = "Deleting category failed!";
+        header("Location: category.php");
+        exit();
     }
 } else if(isset($_POST['addProduct_button'])){
     $name = $_POST['name'];
@@ -117,9 +129,13 @@ if(isset($_POST['addCateg_button'])){ // IF FORM SUBMIT IS FROM addCateg_button
 
     if($product_query_run){
         move_uploaded_file($_FILES['image']['tmp_name'], $path.'/'.$filename); // MOVE THE UPLOADED IMAGE FILE FROM THE TEMPORARY DIRECTORY TO THE SPECIFIED UPLOAD DIRECTORY WITH GENERATED FILE NAME 
-        redirect("addProduct.php", "✔ Product added successfully"); 
+        $_SESSION['success'] = "✔ Product added successfully!";
+        header("Location: product.php");
+        exit();
     } else{
-        redirect("addProduct.php", "Something went wrong"); 
+        $_SESSION['error'] = "Adding product failed!";
+        header("Location: product.php");
+        exit();
     }
 } else if(isset($_POST['editProduct_button'])){
     $product_id = $_POST['product_id'];
@@ -178,12 +194,18 @@ if(isset($_POST['addCateg_button'])){ // IF FORM SUBMIT IS FROM addCateg_button
                     unlink("../uploads/".$old_image);
                 }
             }
-            redirect("product.php","✔ Product Updated Successfully");
+            $_SESSION['success'] = "✔ Product updated successfully!";
+            header("Location: product.php");
+            exit();
         } else {
-            redirect("product.php","Something went wrong");
+            $_SESSION['error'] = "Updating product failed!";
+            header("Location: product.php");
+            exit();
         }
     } else{
-        redirect("product.php","Something went wrong");
+        $_SESSION['error'] = "Updating product failed!";
+        header("Location: product.php");
+        exit();
     }
 } else if(isset($_POST['deleteProduct_button'])){
     $product_id = $_POST['product_id'];
@@ -201,9 +223,13 @@ if(isset($_POST['addCateg_button'])){ // IF FORM SUBMIT IS FROM addCateg_button
         if(file_exists("../uploads/".$image)){
             unlink("../uploads/".$image);
         }
-        redirect("product.php","✔ Product Deleted Successfully");
+        $_SESSION['success'] = "✔ Product deleted successfully!";
+        header("Location: product.php");
+        exit();
     } else{
-        redirect("product.php","Something went wrong");
+        $_SESSION['error'] = "Deleting product failed!";
+        header("Location: product.php");
+        exit();
     }
 } else if(isset($_POST['deleteOrder_button'])){
     $order_id = $_POST['order_id'];
@@ -217,9 +243,13 @@ if(isset($_POST['addCateg_button'])){ // IF FORM SUBMIT IS FROM addCateg_button
     $delete_items_query_run = mysqli_query($con, $delete_items_query);
 
     if($delete_order_query_run && $delete_items_query_run){
-        redirect("orders.php","✔ Order Deleted Successfully");
+        $_SESSION['success'] = "✔ Order deleted successfully!";
+        header("Location: orders.php");
+        exit();
     } else{
-        redirect("orders.php","Something went wrong");
+        $_SESSION['error'] = "Deleting order failed!";
+        header("Location: orders.php");
+        exit();
     }
 } else if(isset($_POST['editOrderStatus'])){
     $order_id = $_POST['order_id'];
@@ -449,9 +479,10 @@ if(isset($_POST['addCateg_button'])){ // IF FORM SUBMIT IS FROM addCateg_button
 
                         // Send email
                         $mail->send();
-                        echo 'Email sent successfully';
                         } catch (Exception $e) {
-                            echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
+                            $_SESSION['error'] = "Message could not be sent. Mailer Error: {$mail->ErrorInfo}!";
+                            header("Location: orders.php");
+                            exit();
                         }
                         // Delete from orders and order_items tables
                         $delete_order_query = "DELETE FROM orders WHERE id = ?";
@@ -465,19 +496,28 @@ if(isset($_POST['addCateg_button'])){ // IF FORM SUBMIT IS FROM addCateg_button
                         $delete_items_query_run = mysqli_stmt_execute($stmt);
 
                         // Redirect to appropriate page based on action
-                        redirect("orders.php","✔ Order Completed Successfully");
+                        $_SESSION['success'] = "✔ Order completed successfully!";
+                        header("Location: completedOrders.php");
                         exit();
                     } else {
-                        echo "No order found with ID: $order_id";
+                        $_SESSION['error'] = "No order found with ID: $order_id!";
+                        header("Location: orders.php");
+                        exit();
                     }
                 } else {
-                    echo "Error retrieving order details: " . mysqli_error($con);
+                    $_SESSION['error'] = "Error retrieving order details: " . mysqli_error($con) ."!";
+                    header("Location: orders.php");
+                    exit();
                 }
             } else {
-                echo "Failed to insert order details into order_transac table: " . mysqli_error($con);
+                $_SESSION['error'] = "Failed to insert order details into transaction table: " . mysqli_error($con) ."!";
+                header("Location: orders.php");
+                exit();
             }
         } else {
-            echo "Failed to update order status: " . mysqli_error($con);
+            $_SESSION['error'] = "Failed to update order status: " . mysqli_error($con) ."!";
+            header("Location: orders.php");
+            exit();
         }
     } else if ($newStatus === 'Cancelled') {
         // Update order status in the orders table
@@ -690,61 +730,73 @@ if(isset($_POST['addCateg_button'])){ // IF FORM SUBMIT IS FROM addCateg_button
                         </body>
                         </html>
                         ';
-                    // Send email
-                    $mail->send();
-                    echo 'Email sent successfully';
-                    } catch (Exception $e) {
-                        echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
-                    }
+                        // Send email
+                        $mail->send();
+                        } catch (Exception $e) {
+                            $_SESSION['error'] = "Message could not be sent. Mailer Error: {$mail->ErrorInfo}!";
+                            header("Location: orders.php");
+                            exit();
+                        }
 
-                    // Update product quantities in the product table
-                    $updateProductQuantities = "UPDATE product p
+                        // Update product quantities in the product table
+                        $updateProductQuantities = "UPDATE product p
+                                                    INNER JOIN order_items oi ON p.id = oi.product_id
+                                                    SET p.quantity = p.quantity + oi.quantity
+                                                    WHERE oi.order_id = ?";
+                        $stmt = mysqli_prepare($con, $updateProductQuantities);
+                        mysqli_stmt_bind_param($stmt, "i", $order_id);
+                        $updateProductQuantitiesResult = mysqli_stmt_execute($stmt);
+        
+                        // Update product status in the product table
+                        $updateProductStatus = "UPDATE product p
                                                 INNER JOIN order_items oi ON p.id = oi.product_id
-                                                SET p.quantity = p.quantity + oi.quantity
+                                                SET p.status = '1'
                                                 WHERE oi.order_id = ?";
-                    $stmt = mysqli_prepare($con, $updateProductQuantities);
-                    mysqli_stmt_bind_param($stmt, "i", $order_id);
-                    $updateProductQuantitiesResult = mysqli_stmt_execute($stmt);
-    
-                    // Update product status in the product table
-                    $updateProductStatus = "UPDATE product p
-                                            INNER JOIN order_items oi ON p.id = oi.product_id
-                                            SET p.status = '1'
-                                            WHERE oi.order_id = ?";
-                    $stmt = mysqli_prepare($con, $updateProductStatus);
-                    mysqli_stmt_bind_param($stmt, "i", $order_id);
-                    $updateProductStatusQuery = mysqli_stmt_execute($stmt);
-    
-                    if ($updateProductQuantitiesResult && $updateProductStatusQuery) {
-                        // Delete from orders and order_items tables
-                        $delete_order_query = "DELETE FROM orders WHERE id = ?";
-                        $stmt = mysqli_prepare($con, $delete_order_query);
+                        $stmt = mysqli_prepare($con, $updateProductStatus);
                         mysqli_stmt_bind_param($stmt, "i", $order_id);
-                        $delete_order_query_run = mysqli_stmt_execute($stmt);
-    
-                        $delete_items_query = "DELETE FROM order_items WHERE order_id = ?";
-                        $stmt = mysqli_prepare($con, $delete_items_query);
-                        mysqli_stmt_bind_param($stmt, "i", $order_id);
-                        $delete_items_query_run = mysqli_stmt_execute($stmt);
-    
-                        // Redirect to appropriate page based on action
-                        redirect("cancelledOrders.php", "✔ Order Cancelled Successfully");
+                        $updateProductStatusQuery = mysqli_stmt_execute($stmt);
+        
+                        if ($updateProductQuantitiesResult && $updateProductStatusQuery) {
+                            // Delete from orders and order_items tables
+                            $delete_order_query = "DELETE FROM orders WHERE id = ?";
+                            $stmt = mysqli_prepare($con, $delete_order_query);
+                            mysqli_stmt_bind_param($stmt, "i", $order_id);
+                            $delete_order_query_run = mysqli_stmt_execute($stmt);
+        
+                            $delete_items_query = "DELETE FROM order_items WHERE order_id = ?";
+                            $stmt = mysqli_prepare($con, $delete_items_query);
+                            mysqli_stmt_bind_param($stmt, "i", $order_id);
+                            $delete_items_query_run = mysqli_stmt_execute($stmt);
+        
+                            // Redirect to appropriate page based on action
+                            $_SESSION['success'] = "✔ Order cancelled successfully!";
+                            header("Location: cancelledOrders.php");
+                            exit();
+                        } else {
+                            $_SESSION['error'] = "No order found with ID: $order_id!";
+                            header("Location: orders.php");
+                            exit();
+                        }
+                    } else {
+                        $_SESSION['error'] = "Error retrieving order details: " . mysqli_error($con) ."!";
+                        header("Location: orders.php");
                         exit();
-                    } else {
-                        echo "No order found with ID: $order_id";
                     }
                 } else {
-                    echo "Error retrieving order details: " . mysqli_error($con);
-                }
-                    } else {
-                        echo "Failed to update product quantities or status: " . mysqli_error($con);
-                    }
-                } else {
-                    echo "Failed to insert order details into order_transac table: " . mysqli_error($con);
+                    $_SESSION['error'] = "Failed to update product quantities or status: " . mysqli_error($con) ."!";
+                    header("Location: orders.php");
+                    exit();   
                 }
             } else {
-                echo "Failed to update order status: " . mysqli_error($con);
+                $_SESSION['error'] = "Failed to insert order details into order_transac table: " . mysqli_error($con) ."!";
+                header("Location: orders.php");
+                exit(); 
             }
+        } else {
+            $_SESSION['error'] = "Failed to update order status: " . mysqli_error($con) ."!";
+            header("Location: orders.php");
+            exit(); 
+        }
     } else if ($newStatus === 'Out for Delivery') {
         // Update order status in the orders table
         $updateQuery = "UPDATE orders SET status = ? WHERE id = ?";
@@ -966,20 +1018,28 @@ if(isset($_POST['addCateg_button'])){ // IF FORM SUBMIT IS FROM addCateg_button
 
                         // Send email
                         $mail->send();
-                        echo 'Email sent successfully';
                         } catch (Exception $e) {
-                            echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
+                            $_SESSION['error'] = "Message could not be sent. Mailer Error: {$mail->ErrorInfo}!";
+                            header("Location: orders.php");
+                            exit();
                         }
-                        redirect("orders.php","✔ Order Out for Delivery!");
+                        $_SESSION['success'] = "✔ Order Out for Delivery!";
+                        header("Location: deliverOrder.php");
                         exit();
                     } else {
-                        echo "No order found with ID: $order_id";
+                        $_SESSION['error'] = "No order found with ID: $order_id!";
+                        header("Location: orders.php");
+                        exit();
                     }
                 } else {
-                    echo "Error retrieving order details: " . mysqli_error($con);
+                    $_SESSION['error'] = "Error retrieving order details: " . mysqli_error($con) ."!";
+                    header("Location: orders.php");
+                    exit();
                 }
             } else {
-                echo "Failed to retreive order details: " . mysqli_error($con);
+                $_SESSION['error'] = "Failed to retreive order details: " . mysqli_error($con) ."!";
+                header("Location: orders.php");
+                exit();
             }
     } else {
         // For any other status change, update the order status
@@ -990,9 +1050,7 @@ if(isset($_POST['addCateg_button'])){ // IF FORM SUBMIT IS FROM addCateg_button
             // Redirect based on status change
             if ($newStatus === 'Ongoing') {
                 header('Location: orders.php');
-            } else {
-                echo "Status updated successfully";
-            }
+            } 
         } else {
             echo "Failed to update order status: " . mysqli_error($con);
         }
@@ -1005,9 +1063,13 @@ if(isset($_POST['addCateg_button'])){ // IF FORM SUBMIT IS FROM addCateg_button
     $delete_order_query_run = mysqli_query($con, $delete_order_query);
 
     if($delete_order_query_run){
-        redirect("completedOrders.php","✔ Order Transaction Deleted Successfully");
+        $_SESSION['success'] = "✔ Order transaction deleted successfully!";
+        header("Location: completedOrders.php");
+        exit();
     } else{
-        redirect("completedOrders.php","Something went wrong");
+        $_SESSION['error'] = "Deleting order transaction failed!";
+        header("Location: completedOrders.php");
+        exit();
     }
 } else if(isset($_POST['deleteCancelledTransacOrder_button'])){
     $order_transac_id = $_POST['order_transac_id'];
@@ -1017,9 +1079,13 @@ if(isset($_POST['addCateg_button'])){ // IF FORM SUBMIT IS FROM addCateg_button
     $delete_order_query_run = mysqli_query($con, $delete_order_query);
 
     if($delete_order_query_run){
-        redirect("cancelledOrders.php","✔ Order Transaction Deleted Successfully");
+        $_SESSION['success'] = "✔ Order transaction deleted successfully!";
+        header("Location: cancelledOrders.php");
+        exit();
     } else{
-        redirect("cancelledOrders.php","Something went wrong");
+        $_SESSION['error'] = "Deleting order transaction failed!";
+        header("Location: cancelledOrders.php");
+        exit();
     }
 } else if(isset($_POST['updateRole'])){
     $customer_id = $_POST['user_id'];
@@ -1033,17 +1099,17 @@ if(isset($_POST['addCateg_button'])){ // IF FORM SUBMIT IS FROM addCateg_button
     
     if($role_query_run){
         // Role update successful
-        $_SESSION['message'] = "User Role Updated Successfully";
+        $_SESSION['success'] = "✔ User role updated successfully!";
         header("Location: users.php");
         exit();
     } else {
         // Role update failed
-        $_SESSION['message'] = "Failed to update user role";
+        $_SESSION['error'] = "Failed to update user role!";
         header("Location: users.php");
         exit();
     }
 } else if(isset($_POST['deleteUser_button'])){
-    $user_id = $_POST['customer_id']; // Adjusted to 'customer_id' as per the form input name
+    $user_id = $_POST['user_id']; // Adjusted to 'customer_id' as per the form input name
 
     // Fetch user data (optional, for logging or additional operations)
     $user_query = "SELECT * FROM users WHERE user_id='$user_id'";
@@ -1055,9 +1121,13 @@ if(isset($_POST['addCateg_button'])){ // IF FORM SUBMIT IS FROM addCateg_button
     $delete_query_run = mysqli_query($con, $delete_query);
 
     if($delete_query_run){
-        redirect("users.php","User Deleted Successfully");
+        $_SESSION['success'] = "✔ User deleted successfully!";
+        header("Location: users.php");
+        exit();
     } else {
-        redirect("users.php","Error: Unable to delete user");
+        $_SESSION['error'] = "Deleting users failed!";
+        header("Location: users.php");
+        exit();
     }
 }
 

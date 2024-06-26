@@ -158,31 +158,7 @@
         </div>
     </form>
 </section>
-
-
-
 <script src="assets/js/cartQty.js"></script>
 <script src="assets/js/order.js"></script>
-<!--------------- ALERTIFY JS --------------->
-<script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
-<script>
-<?php
-if (isset($_SESSION['message'])) { // CHECK IF SESSION MESSAGE VARIABLE IS SET
-?>
-    alertify.set('notifier','position', 'top-right');
-    
-    // Check if the message indicates success or failure
-    <?php if ($_SESSION['success'] === true): ?>
-        alertify.success('<?php echo $_SESSION['message']; ?>'); // DISPLAY SUCCESS MESSAGE NOTIF
-    <?php else: ?>
-        alertify.error('<?php echo $_SESSION['message']; ?>'); // DISPLAY ERROR MESSAGE NOTIF
-    <?php endif; ?>
-    
-<?php
-    unset($_SESSION['message']); // UNSET THE SESSION MESSAGE VARIABLE
-    unset($_SESSION['success']); // UNSET THE SESSION SUCCESS VARIABLE
-}
-?>
-</script>
 <!--------------- FOOTER --------------->
 <?php include('includes/footer.php'); ?>

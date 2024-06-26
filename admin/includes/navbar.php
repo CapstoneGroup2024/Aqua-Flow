@@ -71,10 +71,17 @@
           <span class="nav-link-text" id="side-bar-title">Users</span>
         </a>
       </li>
+      <li class="nav-item nab-item">
+        <a href="userMessage.php" class="nab-link">
+          <i class="material-icons opacity-10" id="side-bar-Iicon">mail</i>
+          <span class="nav-link-text" id="side-bar-title">Messages</span>
+        </a>
+      </li>
+      <li class="nav-item nab-item mt-5">
+        <div class="sidenav-footer logOut w-90">
+            <a href="../logout.php" class="btn bg-primary w-100 BluBtn">Logout</a>
+        </div>
+      </li>
     </ul>
-    <!-- Logout Button -->
-    <div class="sidenav-footer logOut position-absolute w-90">
-        <a href="../logout.php" class="btn bg-primary mt-4 w-100 BluBtn">Logout</a>
-    </div>
   </div>
 </div>

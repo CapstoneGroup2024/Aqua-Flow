@@ -70,6 +70,14 @@
             <span class="nav-link-text ms-1" id="side-bar-title">Users</span>
           </a>
         </li>
+        <li class="nav-item">
+          <a class="nav-link text-dark-blue " href="userMessage.php" id="side-bar-link-box">
+            <div class="text-dark-blue text-center me-2 d-flex align-items-center justify-content-center">
+              <i class="material-icons opacity-10" id="side-bar-icon">mail</i>
+            </div>
+            <span class="nav-link-text ms-1" id="side-bar-title">Messages</span>
+          </a>
+        </li>
       </ul>
     </div>
     <!--------------- LOGOUT BUTTON --------------->

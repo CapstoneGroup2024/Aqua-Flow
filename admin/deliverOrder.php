@@ -36,7 +36,6 @@
                                 <th class="d-none d-lg-table-cell">Order ID</th>
                                 <th class="d-none d-lg-table-cell">Customer Name</th>
                                 <th class="d-table-cell d-lg-table-cell">Order Status</th>
-                                <th class="d-none d-lg-table-cell">Items</th>
                                 <th class="d-table-cell d-lg-table-cell">Details</th>
                             </tr>
                         </thead>
@@ -74,18 +73,30 @@
                                                     <td class="d-none d-lg-table-cell"><?= $order['id']; ?></td>
                                                     <td class="d-none d-lg-table-cell"><?= $userDetails['name']; ?></td> <!-- Display user's name -->
                                                     <td>
-                                                        <form action="codes.php" method="POST">
+                                                        <form id="statusForm<?= $order['id']; ?>" action="codes.php" method="POST">
                                                             <input type="hidden" name="order_id" value="<?= $order['id']; ?>">
                                                             <input type="hidden" name="user_id" value="<?= $userDetails['user_id']; ?>">
                                                             <input type="hidden" name="email" value="<?= $userDetails['email']; ?>">
-                                                            <select name="status" style="padding: 8px; border-radius: 10px;">
+                                                            
+                                                            <select class="statusSelect" name="status" style="padding: 8px; border-radius: 10px;">
+                                                                <option value="Unknown" selected>Select Status</option>
                                                                 <option value="Cancelled">Cancelled</option>
                                                                 <option value="Completed">Completed</option>
                                                             </select>
-                                                            <input type="submit" style="margin-top: 10px;" class="btn bg-primary text-white" name="editOrderStatus" value="Update">
+                                                            
+                                                            <input type="submit" class="updateButton btn BlueBtn" style="margin-top: 10px;" name="editOrderStatus" value="Update" disabled>
+                                                            <br>
+                                                            <select class="reasonSelect" name="reason" style="padding: 8px; border-radius: 10px; display: none;" required>
+                                                                <option value="Unknown">Select Reason</option>
+                                                                <option value="Item out of stock">Item out of stock</option>
+                                                                <option value="Customer cancellation">Customer cancellation</option>
+                                                                <option value="Out of delivery area">Out of delivery area</option>
+                                                                <option value="Other">Other</option>
+                                                            </select>
+                                                            
+                                                            
                                                         </form>
                                                     </td>
-                                                    <td class="d-none d-lg-table-cell"><?= $product['product_name']; ?></td>
                                                     <td>
                                                         <a href="orderDetails.php?id=<?= $order['id']; ?>" style="margin-top: 10px;" class="btn BlueBtn">View Details</a>
                                                     </td>
@@ -159,5 +170,35 @@
         </div>
     </div>
 </div>
+<script>
+    // Function to toggle form elements based on status select
+    function toggleForm(statusSelect) {
+        var form = statusSelect.closest('form');
+        var reasonSelect = form.querySelector('.reasonSelect'); // Assuming class .reasonSelect is used for select element
+        var updateButton = form.querySelector('.updateButton'); // Assuming class .updateButton is used for update button
+        
+        if (statusSelect.value === 'Cancelled') {
+            reasonSelect.style.display = 'inline-block';
+            reasonSelect.setAttribute('required', 'required');
+            updateButton.removeAttribute('disabled');
+        } else if (statusSelect.value !== 'Unknown') {
+            reasonSelect.style.display = 'none';
+            reasonSelect.removeAttribute('required');
+            updateButton.removeAttribute('disabled'); // Enable the button for other statuses except 'Unknown'
+        } else {
+            reasonSelect.style.display = 'none';
+            reasonSelect.removeAttribute('required');
+            updateButton.setAttribute('disabled', 'disabled'); // Disable the button for 'Unknown'
+        }
+    }
+
+    // Initial setup: Attach onchange event listeners to all status selects
+    var statusSelects = document.querySelectorAll('.statusSelect');
+    statusSelects.forEach(function(select) {
+        select.addEventListener('change', function() {
+            toggleForm(this);
+        });
+    });
+</script>
 <!--------------- FOOTER --------------->
 <?php include('includes/footer.php');?>

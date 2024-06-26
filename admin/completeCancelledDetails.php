@@ -28,7 +28,7 @@
                                     <div class="col-md-3 text-center">
                                         <!-- Delivery Details Card -->
                                         <div class="card shadow-sm rounded-3 p-2 mt-4">
-                                            <h4>Order ID #<?= $orderDetails['order_transac_id'] ?></h4>
+                                            <h4>Transaction ID #<?= $orderDetails['order_transac_id'] ?></h4>
                                             <br>
                                             <h6 class="detailOd"><?= formatDate($orderDetails['order_at']) ?></h6>
                                         </div>
@@ -52,6 +52,14 @@
                                     </div>
                                     <div class="col-md-9">
                                         <!-- Order Summary Card -->
+                                        <div class="card shadow-sm rounded-3 p-3 mt-4 text-center">
+                                            <div class="row align-items-center">
+                                                <div class="col-12">
+                                                    <h6 class="d-inline">Reason of Cancellation:</h6> 
+                                                    <h6 class="detailOd d-inline"><?= $orderDetails['reason'] ?></h6>
+                                                </div>
+                                            </div>
+                                        </div>
                                         <div class="card shadow-sm rounded-3 p-3 mt-4 text-center">
                                             <div class="row align-items-center">
                                                 <div class="col-6 col-md-3">

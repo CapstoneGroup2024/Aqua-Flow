@@ -10,12 +10,12 @@ require '../vendor/autoload.php';
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
-$user_id = $_SESSION['user_id'];
 
 if(isset($_POST['profileUpdateBtn'])){
     $name = $_POST['name'];
     $phone = $_POST['phone'];
     $address = $_POST['address'];
+    $user_id = $_SESSION['user_id'];
 
     $update_profile_sql = "UPDATE users SET name=?, phone=?, address=? WHERE user_id=?";
     $stmt = $con->prepare($update_profile_sql);
@@ -24,6 +24,7 @@ if(isset($_POST['profileUpdateBtn'])){
         if ($stmt->execute()) {
             $_SESSION['success'] = "✔ Profile updated successfully!";
             header("Location: ../profile.php");
+            $_SESSION['auth_user']['name'] = $name;
             exit();
         } else {
             // Update failed

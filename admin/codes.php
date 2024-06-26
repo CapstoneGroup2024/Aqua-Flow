@@ -520,6 +520,7 @@ if(isset($_POST['addCateg_button'])){ // IF FORM SUBMIT IS FROM addCateg_button
             exit();
         }
     } else if ($newStatus === 'Cancelled') {
+        $reason = $_POST['reason'];
         // Update order status in the orders table
         $updateQuery = "UPDATE orders SET status = ? WHERE id = ?";
         $stmt = mysqli_prepare($con, $updateQuery);
@@ -528,7 +529,7 @@ if(isset($_POST['addCateg_button'])){ // IF FORM SUBMIT IS FROM addCateg_button
 
         if ($newResult) {
             // Insert order details into 'order_transac' table
-            $insertQuery = "INSERT INTO order_transac (order_id, user_id, user_name, phone, address, product_id, product_name, product_image, quantity, price, total, status, subtotal, additional_fee, grand_total, order_at)
+            $insertQuery = "INSERT INTO order_transac (order_id, user_id, user_name, phone, address, product_id, product_name, product_image, quantity, price, total, status, subtotal, additional_fee, grand_total, reason, order_at)
                             SELECT
                                 o.id AS order_id,
                                 u.user_id AS user_id,
@@ -545,6 +546,7 @@ if(isset($_POST['addCateg_button'])){ // IF FORM SUBMIT IS FROM addCateg_button
                                 o.subtotal AS subtotal,
                                 o.additional_fee AS additional_fee,
                                 o.grand_total AS grand_total,
+                                '$reason',
                                 o.order_at AS order_at
                             FROM
                                 orders o
@@ -580,6 +582,7 @@ if(isset($_POST['addCateg_button'])){ // IF FORM SUBMIT IS FROM addCateg_button
                         $subtotal = $order_data['subtotal'];
                         $additional_fee = $order_data['additional_fee'];
                         $grand_total = $order_data['grand_total'];
+                        $reason = $order_data['reason'];
 
                         // Fetch products related to the order
                         $products_query = "SELECT product_name, quantity, price, total FROM order_transac WHERE order_id = ?";
@@ -675,6 +678,7 @@ if(isset($_POST['addCateg_button'])){ // IF FORM SUBMIT IS FROM addCateg_button
                             <p>Please retain this cancellation information for your records.</p>
 
                             <h3>[Order ID: #' . $order_id . '] (' . date('F j, Y \a\t g:i A', strtotime($order_at)) . ')</h3>
+                            <h3>Reason of Cancellation: ' . $reason . '</h3>
                             <table>
                                 <thead>
                                     <tr>

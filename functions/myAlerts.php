@@ -177,13 +177,13 @@
     function getOrderTime($table, $status = null, $timestamp_column = 'order_at') {
         global $con;
         
-        $today = date('Y-m-d'); // Get today's date in YYYY-MM-DD format
+        $current_timestamp = time(); // Get current timestamp
         
         // Query for recent orders (today's orders)
-        $queryRecent = "SELECT * FROM $table WHERE DATE($timestamp_column) = '$today'";
-        
+        $queryRecent = "SELECT * FROM $table WHERE $timestamp_column >= FROM_UNIXTIME($current_timestamp, '%Y-%m-%d')";
+    
         // Query for past orders (excluding today's orders)
-        $queryPast = "SELECT * FROM $table WHERE DATE($timestamp_column) < '$today'";
+        $queryPast = "SELECT * FROM $table WHERE $timestamp_column < FROM_UNIXTIME($current_timestamp, '%Y-%m-%d')";
         
         if ($status !== null) {
             $queryRecent .= " AND status = '$status'";

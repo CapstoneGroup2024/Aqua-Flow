@@ -84,52 +84,54 @@
             </div>
 
             <div class="col-lg-3 col-md-6 col-sm-6 mb-3">
-                <div class="card mb-2">
-                    <div class="card-header p-3 pt-2 bg-transparent">
-                        <div class="icon icon-lg icon-shape bg-gradient-primary shadow-primary shadow text-center border-radius-xl mt-n4 position-absolute">
-                            <i class="material-icons opacity-10">leaderboard</i>
-                        </div>
-                        <div class="text-end pt-1">
-                            <p class="text-sm mb-0 text-capitalize">Pending Orders</p>
-                            <h4 class="mb-0"><?php echo number_format($totalOngoingOrders); ?></h4>
-                        </div>
-                    </div>
-                    <hr class="dark horizontal my-0">
-                    <div class="card-footer p-3">
-                        <p class="mb-0"><span class="<?php echo ($percentageChange >= 0) ? 'text-danger' : 'text-success'; ?> text-sm font-weight-bolder"><?php echo $changeTxt; ?><span style="color: black;"> compared 5 hrs ago</span></span></p>
-                    </div>
-                </div>
+    <div class="card mb-2">
+        <div class="card-header p-3 pt-2 bg-transparent">
+            <div class="icon icon-lg icon-shape bg-gradient-primary shadow-primary shadow text-center border-radius-xl mt-n4 position-absolute">
+                <i class="material-icons opacity-10">leaderboard</i>
             </div>
+            <div class="text-end pt-1">
+                <p class="text-sm mb-0 text-capitalize">Pending Orders</p>
+                <h4 class="mb-0"><?php echo number_format($totalOngoingOrders); ?></h4>
+            </div>
+        </div>
+        <hr class="dark horizontal my-0">
+        <div class="card-footer p-3">
+            <p class="mb-0"><span class="<?php echo ($percentageChange >= 0) ? 'text-success' : 'text-danger'; ?> text-sm font-weight-bolder"><?php echo $changeTxt; ?><span style="color: black;"> compared 5 hrs ago</span></span></p>
+        </div>
+    </div>
+</div>
 
-                <div class="col-lg-3 col-md-6 col-sm-6 mb-3">
-                    <div class="card mb-2">
-                        <div class="card-header p-3 pt-2 bg-transparent">
-                            <div class="icon icon-lg icon-shape bg-gradient-success shadow-success text-center border-radius-xl mt-n4 position-absolute">
-                                <i class="material-icons opacity-10">store</i>
-                            </div>
-                            <div class="text-end pt-1">
-                                <p class="text-sm mb-0 text-capitalize">Today's Profit</p>
-                                <h4 class="mb-0"><span style="font-family: 'Poppins', sans-serif;">₱<?php echo number_format($todayRevenue); ?>.00</span></h4>
-                            </div>
-                        </div>
-                        <hr class="horizontal my-0 dark">
-                        <div class="card-footer p-3">
-                            <?php
-                            // Calculate percentage change
-                            if ($yesterdayRevenue != 0) {
-                                $percentageChange = (($todayRevenue - $yesterdayRevenue) / $yesterdayRevenue) * 100;
-                                $changeClass = ($percentageChange > 0) ? 'text-danger' : 'text-success';
-                                $changeSymbol = ($percentageChange > 0) ? '+' : '';
-                                $changeText = sprintf('%s%.2f%% than yesterday', $changeSymbol, abs($percentageChange));
-                            } else {
-                                $changeText = 'No data yesterday';
-                                $changeClass = 'text-muted';
-                            }
-                            ?>
-                            <p class="mb-0"><span class="<?php echo $changeClass; ?> text-sm font-weight-bolder"><?php echo $changeText; ?></span></p>
-                        </div>
-                    </div>
-                </div>
+
+<div class="col-lg-3 col-md-6 col-sm-6 mb-3">
+    <div class="card mb-2">
+        <div class="card-header p-3 pt-2 bg-transparent">
+            <div class="icon icon-lg icon-shape bg-gradient-success shadow-success text-center border-radius-xl mt-n4 position-absolute">
+                <i class="material-icons opacity-10">store</i>
+            </div>
+            <div class="text-end pt-1">
+                <p class="text-sm mb-0 text-capitalize">Today's Profit</p>
+                <h4 class="mb-0"><span style="font-family: 'Poppins', sans-serif;">₱<?php echo number_format($todayRevenue); ?>.00</span></h4>
+            </div>
+        </div>
+        <hr class="horizontal my-0 dark">
+        <div class="card-footer p-3">
+            <?php
+            // Format percentage change text and determine styling based on the change
+            if ($yesterdayRevenue != 0) {
+                $percentageChange = (($todayRevenue - $yesterdayRevenue) / $yesterdayRevenue) * 100;
+                $changeClass = ($percentageChange > 0) ? 'text-danger' : 'text-success';
+                $changeSymbol = ($percentageChange > 0) ? '-' : '+';
+                $changeText = sprintf('%s%.1f%% than yesterday', $changeSymbol, abs($percentageChange));
+            } else {
+                $changeText = 'No data yesterday';
+                $changeClass = 'text-muted';
+            }
+            ?>
+            <p class="mb-0"><span class="<?php echo $changeClass; ?> text-sm font-weight-bolder"><?php echo $changeText; ?></span></p>
+        </div>
+    </div>
+</div>
+
 
                 <div class="col-lg-3 col-md-6 col-sm-6 mb-3">
                     <div class="card mb-2">

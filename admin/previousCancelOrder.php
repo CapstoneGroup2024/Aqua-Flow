@@ -46,7 +46,7 @@ $orders = getOrderTime("order_transac", "Cancelled");
                     <table class="table text-center">
                         <thead>
                             <tr>
-                                <th class="d-table-cell d-lg-table-cell">Transaction ID</th>
+                                <th class="d-table-cell d-lg-table-cell">Order ID</th>
                                 <th class="d-none d-lg-table-cell">Customer Name</th>
                                 <th class="d-none d-lg-table-cell">Items</th>
                                 <th class="d-none d-lg-table-cell">Order Date</th>
@@ -56,7 +56,7 @@ $orders = getOrderTime("order_transac", "Cancelled");
                         </thead>
                         <tbody>
                                     <?php
-                                    if ($orders['recentOrders'] && mysqli_num_rows($orders['pastOrders']) > 0) {
+                                    if ($orders['pastOrders'] && mysqli_num_rows($orders['pastOrders']) > 0) {
                                         while ($order = mysqli_fetch_assoc($orders['pastOrders'])) {
                                     ?>
                                     <tr style="text-align: center; vertical-align: middle;">

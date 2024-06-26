@@ -46,7 +46,7 @@ $orders = getOrderTime("order_transac", "Completed");
                     <table class="table text-center">
                         <thead>
                             <tr>
-                                <th class="d-table-cell d-lg-table-cell">Transaction ID</th>
+                                <th class="d-table-cell d-lg-table-cell">Order ID</th>
                                 <th class="d-none d-lg-table-cell">Customer Name</th>
                                 <th class="d-none d-lg-table-cell">Items</th>
                                 <th class="d-none d-lg-table-cell">Order Date</th>

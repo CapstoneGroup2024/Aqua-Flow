@@ -17,7 +17,7 @@
 <link rel="stylesheet" href="assets/css/account.css">   
 <section class="p-5 text-sm-start">
     <div class="container">
-        <div class="Register mt-4">
+        <div class="Register mt-4 shadow-lg">
             <div class="heading mt-4 text-center">Manage Account</div>
             <div class="profile-card row justify-content-center">
                 <form class="regform" action="functions/updateprofile.php" method="POST">

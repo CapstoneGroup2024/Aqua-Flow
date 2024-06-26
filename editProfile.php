@@ -17,7 +17,7 @@
 <link rel="stylesheet" href="assets/css/profile.css">   
 <section class="p-5 p-md-5 text-sm-start" id="Purchases">
     <div class="container">
-        <div class="Register">
+        <div class="Register shadow-lg">
             <div class="heading">Profile Form</div>
             <div class="profile-card">
                 <img src="assets/images/user.png" alt="Profile Picture">

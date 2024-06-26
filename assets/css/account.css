@@ -11,9 +11,12 @@ body {
     align-items: center;
     min-height: 110vh;
     background-color: #f0f0f0;
+    background-image: url('../images/tryBG.png'); /* Add your image path here */
+    background-size: cover; /* Make the image cover the entire background */
+    background-position: center; /* Center the image */
+    background-repeat: no-repeat; /* Prevent the image from repeating */
     font-family: 'Poppins', sans-serif;
 }
-
 .Register {
     max-width: 1000px; /* Adjusted maximum width */
     background-color: #ffffff;
@@ -35,7 +38,6 @@ body {
     color: #a9d6e5;
     border-radius: 8px;
     border: 2px solid rgba(255, 255, 255, .2);
-    backdrop-filter: blur(50px);
     max-width: 1000px;
     margin: auto;
     padding: 40px;

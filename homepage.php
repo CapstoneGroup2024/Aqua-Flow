@@ -29,7 +29,7 @@
                     <img src="assets/images/Quality.webp" class="card-img-top" alt="...">
                     <div class="card-body">
                         <h5 class="card-title">Quality</h5>
-                        <p class="card-text">Improved ordering experience with required supplier certification checks that provide you with high-quality water that complies with government regulations.</p>
+                        <p class="card-text">A quality clean water station considers long-term sustainability, including the source of water, energy efficiency of operations, and environmentally responsible practices in water treatment and distribution.</p>
                     </div>
                 </div>
             </div>
@@ -38,7 +38,7 @@
                     <img src="assets/images/paymenttt.png" class="card-img-top" alt="...">
                     <div class="card-body">
                         <h5 class="card-title">Payment</h5>
-                        <p class="card-text">There's no need to worry about COD or waiting for deliveries anymore. Through the app, GCash, Maya, and Grab the three most popular online payment methods are accepted.</p>
+                        <p class="card-text">There's no need to worry about online payment because our website only accepts Cash on Delivery. After the item is delivered, the consumer can proceed with payment.</p>
                     </div>
                 </div>
             </div>
@@ -47,7 +47,7 @@
                     <img src="assets/images/Hassle free.png" class="card-img-top" alt="...">
                     <div class="card-body">
                         <h5 class="card-title">Hassle free</h5>
-                        <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This card has even longer content than the first to show that equal height action.</p>
+                        <p class="card-text">The primary responsibility of a delivery man is to transport water from the station to various customers or distribution points. This involves loading containers or bottles of water onto the delivery vehicle and ensuring they are securely transported.</p>
                     </div>
                 </div>
             </div>
@@ -79,7 +79,7 @@
     <div class="drop" style="--clr:#013D67;">
       <div class="content">
         <h2>Commitment</h2>
-        <p>we are dedicated to ensuring access to clean water for all, fostering sustainable practices, and promoting water conservation globally.</p>
+        <p>We are dedicated to ensuring access to clean water for all, fostering sustainable practices, and promoting water conservation globally.</p>
       </div>
     </div>
   </div>  

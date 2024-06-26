@@ -48,6 +48,26 @@ if(isset($_POST['cartBtn'])){ // CHECK IF THE 'cartBtn' IS SET IN THE POST REQUE
         header('Location: ../order.php');
         exit; // Terminate further execution
     }
+    
+    $stocksCheck = "SELECT quantity FROM product WHERE id='$productId'";
+    $stocksCheck_query = mysqli_query($con, $stocksCheck);
+    
+    if ($stocksCheck_query) {
+        $productData = mysqli_fetch_assoc($stocksCheck_query);
+        $availableStock = $productData['quantity'];
+    
+        // Check if the requested quantity exceeds available stock
+        if ($quantity > $availableStock) {
+            $_SESSION['error'] = "The requested quantity exceeds the available stock!";
+            header('Location: ../order.php');
+            exit; // Terminate further execution
+        }
+    } else {
+        $_SESSION['error'] = "Failed to fetch product stock information!";
+        header('Location: ../order.php');
+        exit; // Terminate further execution
+    }
+    
 
     // Check if the same product and category already exists in cart_items
     $productCheck = "SELECT * FROM cart_items WHERE user_id='$userId' AND product_id='$productId' AND category_id='$categoryId'";

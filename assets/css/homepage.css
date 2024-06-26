@@ -9,7 +9,7 @@
     position: absolute;
 }
 body{
-    background-color: #80a6c2;
+    background-color: #AAD7F6!important;
 }
 /*--------------- NAVBAR ---------------*/
 .navbar-brand{
@@ -237,12 +237,6 @@ h1 .aquaflow-text {
 }
 
 /*-------Contact------*/
-footer{
-    background-color: #9cc5eb;
-}
-.first-container{
-    margin-top: -20px;
-}
 .contact-title{
     margin-top: 20px;
     color: #013D67;
@@ -458,7 +452,345 @@ a.contact-link:hover{
    
 }
 /* ------------------- Medium Screens ------------------- */
-@media all and (min-width: 768px){
+@media all and (max-width: 1024px) {
+    .water_drop {
+        width: 120px; /* Adjusted size for medium screens */
+        height: 120px; /* Adjusted size for medium screens */
+        margin-left: -80px; /* Adjusted negative margin to move the water_drop more to the left */
+        margin-top: -30px; /* Adjusted negative margin to move the water_drop higher */
+        position: relative;
+    }
+
+    h1.aquaflow-text {
+        font-size: 80px; /* Reduced font size for h1 on medium screens */
+    }
+
+    h5.aquaflow-text {
+        font-size: 10px; /* Reduced font size for h5 on medium screens */
+    }
+
+    a.ordernow-btn {
+        display: block;
+        position: absolute;
+        width: auto; /* Adjust button width automatically */
+        height: 60px; /* Adjust button height as needed */
+        border-radius: 15px; /* Adjust button border radius */
+        bottom: 10%; /* Adjust button position vertically */
+        left: 50%; /* Center button horizontally */
+        transform: translateX(-50%);
+        text-align: center;
+        line-height: 25px; /* Vertical alignment of text */
+        font-size: 18px; /* Increase button text font size */
+        color: #013D67; /* Adjust button text color */
+        text-decoration: none; /* Remove underline */
+    }
+
+    a.ordernow-btn span {
+        display: block;
+        font-weight: bold;
+    }
+
+    h5.aquaflow-text {
+        font-size: 90px; /* Reduced font size for h5 on medium screens */
+    }
+}
+
+
+@media only screen and (max-width: 768px) {
+    h1.aquaflow-text {
+        font-size: 14px; /* Baguhin ang font-size base sa iyong preference */
+        /* Mga iba pang mga property na gusto mong baguhin sa tablet screen */
+        float: right; /* Ilagay sa kanan ng screen */
+        margin-left: 310px; /* Dagdagan ang margin sa kanang bahagi, depende sa gusto mong layout */
+    }
+
+    h5.aquaflow-text {
+        font-size: 7px; /* Baguhin ang font-size base sa iyong preference */
+        /* Mga iba pang mga property na gusto mong baguhin sa tablet screen */
+        float: right; /* Ilagay sa kanan ng screen */
+        margin-left: 300px; /* Dagdagan ang margin sa kanang bahagi, depende sa gusto mong layout */
+    }
+}
+
+
+
+@media all and (max-width: 425px) {
+    .water_drop {
+        width: 50px; /* Adjusted size for smaller screens */
+        height: 50px; /* Adjusted size for smaller screens */
+        margin-left: -75px; /* Adjusted negative margin to move the water_drop more to the left */
+        margin-top: 450px; /* Increased margin-top to move the water_drop lower */
+        position: relative;
+    }
+    
+    h1.aquaflow-text {
+        font-size: 18px; /* Slightly increased font size for better readability */
+        margin-left: 0px; /* Center align */
+        margin-top: 10px; /* Adjusted margin to move h1 slightly higher */
+        text-align: center; /* Centered text */
+    }
+
+    h5.aquaflow-text {
+        font-size: 12px; /* Slightly increased font size for better readability */
+        margin-left: 0px; /* Center align */
+        margin-top: 5px; /* Adjusted margin to move h5 slightly higher */
+        text-align: center; /* Centered text */
+    }
+
+    a.ordernow-btn {
+        display: block;
+        position: fixed; /* Fixed positioning for better visibility */
+        width: 80%; /* Adjusted button width */
+        max-width: 300px; /* Maximum width to ensure button doesn't become too wide */
+        height: 50px; /* Adjusted button height */
+        border-radius: 12px; /* Rounded corners for button */
+        bottom: 5%; /* Positioned button slightly higher on the screen */
+        left: 50%; /* Centered button horizontally */
+        transform: translateX(-50%);
+        text-align: center;
+        line-height: 50px; /* Centered text vertically */
+        font-size: 16px; /* Font size for button text */
+        color: #013D67; /* Button text color */
+        background-color: #ffffff; /* Button background color */
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); /* Added box shadow for depth */
+        text-decoration: none; /* Remove underline */
+    }
+
+    a.ordernow-btn span {
+        font-weight: bold; /* Bold text for button */
+    }
+}
+.first-container{
+    margin-top: -20px;
+}
+.contact-title{
+    margin-top: 20px;
+    color: #013D67;
+    font-family: 'Suez One';
+    font-weight: bold;
+    letter-spacing: 1px;
+    font-size: 25px;
+}
+.svg-container{
+    display: flex;
+    align-items: center;
+    background-color: #D9D9D9;
+    margin-right: 20px;
+    padding: 10px;
+    border-radius: 10px;
+}
+.contact-info div {
+    display: flex;
+    align-items: center;
+}
+.contact-text{
+    color: #000000;
+    font-size: 14px;
+}
+#contact-header{
+    font-family: 'Suez One';
+    color: #414833;
+    letter-spacing: 1px;
+}
+.contact-info{
+    display: flex;
+    justify-content: space-between;
+}
+.contact-ul {
+    list-style: none;
+    padding: 0;
+}
+.contact-ul li {
+    display: flex;
+    align-items: center;
+}
+.footer-logo {
+    display: flex;
+    color: white;
+    align-items: center;
+    font-weight: bold;
+    letter-spacing: 1px;
+  }
+ 
+#footer-column {
+    display: flex;
+    color: white;
+    align-items: center;
+    justify-content: center;
+}
+#footer-container{
+    margin-left: 5px;
+}
+#contact-items-container{
+    padding-left: 0px;
+}
+#items-container{
+    width: 100%;;
+}
+.form-container {
+    background: #013D67;
+    border: none;
+    color: #fff;
+    border-radius: 25px;
+    box-shadow: 10px 10px 30px rgba(0, 0, 0, 0.5), -10px -10px 30px rgba(255, 255, 255, 0.1);
+}
+.form-container .input-box {
+    position: relative;
+}
+.input-box input,textarea {
+    background: #fff;
+    border: 1px solid transparent; /* Add a thin border */
+    outline: none;
+    border-radius: 10px;
+    color: #000000;
+    padding: 20px 20px; /* Adjust padding to your preference */
+    transition: background-color 0.3s ease-in, color 0.3s ease-in-out, border-color 0.3s ease-in, transform 0.3s ease-in-out; /* Add transform transition */
+}  
+.input-box input:hover {
+    border-color: #000000;
+    transform: scale(1.05);  /* Change border color on hover */
+}
+.input-box textarea:hover {
+    border-color: #000000;
+    transform: scale(1.05);  /* Change border color on hover */
+}
+.input-box input::placeholder {
+    color: #020202;
+}
+.input-box textarea::placeholder {
+    color: #000000;
+}
+.form-container #loginbtn {
+    background: #AAD7F6;
+    border: none;
+    outline: none;
+    border-radius: 10px;
+    box-shadow: 10px 10px 30px rgba(0, 0, 0, 0.5), -10px -10px 30px rgba(255, 255, 255, 0.1);
+    cursor: pointer;
+    color: #fff;
+    font-weight: 600;
+    transition: background-color 0.3s ease-in, color 0.3s ease-in-out, border-color 0.3s ease-in, transform 0.3s ease-in-out; /* Add transform transition */
+}
+.form-container #loginbtn:hover {
+    transform: scale(1.06);
+}
+
+
+a.contact-link{
+    text-decoration: none;
+    transition: transform 0.3s ease;
+    color: black;
+}
+
+a.contact-link:hover{
+    text-decoration: underline;
+    transform: scale(1.1);
+}
+.footer-svg-container{
+    transition: transform 0.3s ease;
+    color: rgb(6, 5, 5);
+}
+.footer-svg-container:hover{
+    transform: scale(1.1);
+}
+.contact-item {
+    display: flex;
+    align-items: center;
+}
+.contact-text {
+    flex: 1; /* Allow text to take remaining space */
+    font-size: 14px; /* Adjust font size as needed */
+    margin: 0; /* Remove default margin */
+}
+  
+  
+/* ------------------- Larger Screens ------------------- */
+@media all and (min-width: 1020px) {
+    footer{
+        border-top-left-radius: 280px;
+        border-top-right-radius: 280px;
+        padding-top: 0px;
+    }
+    #contact-container-box{
+        padding-left: 100px!important;
+        padding-right: 20px;
+        margin-top: 35px;
+        flex: 1;
+    }
+    #contact-items-container{
+        margin-left: 70px;
+        margin-right: -40px;
+    }
+    #paragraph-text{
+        font-size: 16px;
+    }
+    #contact-info-text{
+        font-size: 12px;
+        font-family: 'Poppins';
+    }
+    .contact-text{
+        margin-top: 10px;
+    }
+    .contact-ul {
+        margin-top: 10px;
+    }
+    .contact-ul li {
+        margin-bottom: 15px;
+    }
+    hr{
+        opacity: 0.9;
+        border: 1px solid #432054; /* Set the thickness and color of the hr element */
+        margin-left: 100px;
+        margin-top: 25px;
+        margin-right: 100px;
+    }
+    .footer-logo {
+        font-size: 20px;
+        margin-left: 20px!important;
+      }
+       
+    .form-container {
+        width: 320px;
+        height: 400px;
+        margin-left: 5%!important;
+        padding: 20px 20px;
+    }
+    .form-container .input-box {
+        width: 100%;
+        height: 50px;
+        margin-bottom: 5px
+    }
+    #message{
+        width: 100%;
+        height: 150px;
+    }
+    .input-box input,textarea {
+        width: 100%;
+        height: 100%;
+        font-size: 16px;
+        padding: 20px 20px;
+    }
+    .form-container #loginbtn {
+        width: 70%;
+        height: 45px;
+        margin-top: 103px;
+        font-size: 16px;
+    }
+    .footer-svg-container{
+        display: inline-block;
+        color: white;
+        margin-top:-10px;
+        margin-left: 10px;
+        transition: 0.5s;
+    }
+    .icon-container{
+        margin-right: 100px;
+        margin-top: -15px;
+    }
+   
+}
+/* ------------------- Medium Screens ------------------- */
+@media all and (min-width: 320px){
     #contact-container-box {
         padding-left: 50px;
         padding-right: 0px;
@@ -518,7 +850,7 @@ a.contact-link:hover{
         text-align: left;
     }
     #contact-info-text {
-        font-size: 14px;
+        font-size: 12px;
         font-family: 'Poppins';
     }
     .contact-text {
@@ -565,7 +897,7 @@ a.contact-link:hover{
         padding: 20px 20px;
     }
     .form-container #loginbtn {
-        width: 50%;
+        width: 70%;
         height: 45px;
         margin-top: 103px;
         font-size: 16px;
@@ -576,6 +908,10 @@ a.contact-link:hover{
         margin-top: 10px;
         margin-left: 5px;
         transition: 0.5s;
+    }
+    
+    .contact-text {
+        font-size: 14px;
     }
 }
 /* ------------------- Smaller Screens ------------------- */
@@ -604,7 +940,7 @@ a.contact-link:hover{
         text-align: center;
     }
     #contact-info-text {
-        font-size: 14px;
+        font-size: 12px;
         font-family: 'Poppins';
     }
     .contact-text {
@@ -628,10 +964,10 @@ a.contact-link:hover{
 
 
     .form-container {
-        width: 400px;
+        width: 600px;
         height: 400px;
         margin-top: 20px;
-        margin-left: 10%;
+        margin-left: 1px;
         padding: 20px 25px;
     }
     .form-container .input-box {
@@ -651,7 +987,7 @@ a.contact-link:hover{
         padding: 20px 20px;
     }
     .form-container #loginbtn {
-        width: 50%;
+        width: 70%;
         height: 45px;
         margin-top: 103px;
         font-size: 16px;
@@ -673,7 +1009,7 @@ a.contact-link:hover{
         padding-left: 70px;
     }
 }
-@media only screen and (max-width: 640px){
+@media only screen and (max-width: 320px){
     .footer-logo {
         font-size: 15px;
         margin-left: -90px;

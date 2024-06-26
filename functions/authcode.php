@@ -14,7 +14,41 @@
     ini_set('display_errors', 1);
     // REQUIRE DATABASE CONNECTION FILE AGAIN (DUPLICATE)
     require '../config/dbconnect.php';
-
+    function checkPasswordStrength($password) {
+        $strength = 0;
+    
+        // Criteria for strength
+        if (strlen($password) >= 8) {
+            $strength += 1;
+        }
+        if (preg_match('/[A-Z]/', $password)) {
+            $strength += 1;
+        }
+        if (preg_match('/[a-z]/', $password)) {
+            $strength += 1;
+        }
+        if (preg_match('/[0-9]/', $password)) {
+            $strength += 1;
+        }
+        if (preg_match('/[!@#$%^&*(),.?":{}|<>]/', $password)) {
+            $strength += 1;
+        }
+    
+        // Determine the strength level
+        switch ($strength) {
+            case 0:
+            case 1:
+            case 2:
+                return 'Weak';
+            case 3:
+            case 4:
+                return 'Medium';
+            case 5:
+                return 'Strong';
+            default:
+                return 'Weak';
+        }
+    }
     if (isset($_POST["reg_button"])) {
         // REGISTRATION FORM SUBMITTED
 
@@ -25,6 +59,13 @@
         $password = $_POST["password"];
         $confirm_password = $_POST["confirm_password"];
         
+        $passwordStrength = checkPasswordStrength($password);
+        
+        if ($passwordStrength === 'Weak') {
+            $_SESSION['error'] = 'Password is too weak. Please choose a stronger password!';
+            header("Location: ../register.php");
+            exit();
+        } 
         // VALIDATION
         if (empty($name) || empty($email) || empty($phone) || empty($address) || empty($password) || empty($confirm_password)) {
             // IF ANY FIELD IS EMPTY, SET ERROR MESSAGE AND REDIRECT TO REGISTER PAGE

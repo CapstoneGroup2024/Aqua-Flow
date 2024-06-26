@@ -6,7 +6,6 @@
 ?>
 <!--------------- CSS --------------->
 <link rel="stylesheet" href="assets/css/homepage.css">   
-
 <!--------------- HOME PAGE --------------->
 <section class="homepage" id="Home" style="background-image: url('assets/images/Aquaflowbg.png'); background-size: cover;">
   <div class="quote" style="position: absolute; top: 120px; right: 100px;">

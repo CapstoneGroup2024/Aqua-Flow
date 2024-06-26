@@ -1,14 +1,19 @@
-function toggleRadio(label) { // TOGGLE RADIO BUTTON THE CHANGE COLOR
+function toggleRadio(label) {
     var radios = document.querySelectorAll('input[type="radio"]');
-    var labels = document.querySelectorAll('label');
+    var cards = document.querySelectorAll('.changeBorder');
 
-    labels.forEach(function(l) {
-        l.style.borderColor = 'transparent'; // SET BORDER COLOR TO TRANSPARENT
+    // Reset border color for all cards
+    cards.forEach(function(card) {
+        card.style.borderColor = 'transparent';
     });
 
-    radios.forEach(function(radio) { // SET COLOR IF A RADIO BUTTON IS CLICKED
-        if (radio.checked) { // CHECK IF RADIO BUTTON IS CHECKED
-            label.style.borderColor = '#6FC7EA'; // SET BORDER COLOR FOR THE CLICKED LABEL
+    // Set border color for the clicked label's card
+    radios.forEach(function(radio) {
+        if (radio.checked) {
+            var card = label.querySelector('.changeBorder');
+            if (card) {
+                card.style.borderColor = '#6FC7EA';
+            }
         }
     });
 }

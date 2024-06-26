@@ -9,7 +9,7 @@
 <!--------------- RESTRICT USER ACCESSING THIS PAGE THROUGH URL  --------------->
 <?php
     if(isset($_SESSION['auth'])){
-        $_SESSION['message'] = "You are already logged in";
+        $_SESSION['error'] = "You are already logged in!";
         header('Location: register.php');
         exit();
     }

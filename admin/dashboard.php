@@ -1,12 +1,11 @@
 <?php
+// Initialize variables to avoid "undefined variable" warnings
+$today = date('Y-m-d'); // Assuming you want today's date in YYYY-MM-DD format
+
 // Query to get total users
 $user_query = "SELECT COUNT(*) as total FROM users";
 $user_query_run = $con->query($user_query);
 
-// Initialize variables to avoid "undefined variable" warnings
-$today = date('Y-m-d'); // Assuming you want today's date in YYYY-MM-DD format
-
-// Check if query execution was successful
 if ($user_query_run) {
     // Fetch the count from the result
     $row = $user_query_run->fetch_assoc();
@@ -74,7 +73,7 @@ if ($yesterdayDeliveriesResult) {
 }
 
 // Query to get total deliveries for today
-$todayDeliveriesQuery = "SELECT COUNT(status) AS total FROM order_transac WHERE status = 'Completed' AND DATE(order_at) = '$today'";
+$todayDeliveriesQuery = "SELECT COUNT(status) AS total FROM order_transac WHERE status = 'Completed' AND DATE(order_at) = CURDATE()";
 $todayDeliveriesResult = $con->query($todayDeliveriesQuery);
 
 $totalDeliverToday = 0;

@@ -66,22 +66,23 @@
             </div>
             <div class="row">
             <div class="col-lg-3 col-md-6 col-sm-6 mb-3">
-                <div class="card mb-2">
-                    <div class="card-header p-3 pt-2">
-                        <div class="icon icon-lg icon-shape bg-gradient-dark shadow-dark shadow text-center border-radius-xl mt-n4 position-absolute">
-                            <i class="material-icons opacity-10">weekend</i>
-                        </div>
-                        <div class="text-end pt-1">
-                            <p class="text-sm mb-0 text-capitalize">Delivery Today</p>
-                            <h4 class="mb-0"><?php echo number_format($totalDeliverToday); ?></h4>
-                        </div>
-                    </div>
-                    <hr class="dark horizontal my-0">
-                    <div class="card-footer p-3">
-                        <p class="mb-0"><span class="<?php echo $changeClass; ?> text-sm font-weight-bolder"><?php echo $changeText; ?></span></p>
-                    </div>
-                </div>
+    <div class="card mb-2">
+        <div class="card-header p-3 pt-2">
+            <div class="icon icon-lg icon-shape bg-gradient-dark shadow-dark shadow text-center border-radius-xl mt-n4 position-absolute">
+                <i class="material-icons opacity-10">weekend</i>
             </div>
+            <div class="text-end pt-1">
+                <p class="text-sm mb-0 text-capitalize">Complete Today</p>
+                <h4 class="mb-0"><?php echo number_format($totalDeliverToday); ?></h4>
+            </div>
+        </div>
+        <hr class="dark horizontal my-0">
+        <div class="card-footer p-3">
+            <p class="mb-0"><span class="<?php echo $changeClass; ?> text-sm font-weight-bolder"><?php echo $changeText; ?></span></p>
+        </div>
+    </div>
+</div>
+
 
             <div class="col-lg-3 col-md-6 col-sm-6 mb-3">
     <div class="card mb-2">

@@ -12,6 +12,42 @@ ini_set('display_errors', 1);
 
 $user_id = $_SESSION['user_id'];
 
+function checkPasswordStrength($password) {
+    $strength = 0;
+
+    // Criteria for strength
+    if (strlen($password) >= 8) {
+        $strength += 1;
+    }
+    if (preg_match('/[A-Z]/', $password)) {
+        $strength += 1;
+    }
+    if (preg_match('/[a-z]/', $password)) {
+        $strength += 1;
+    }
+    if (preg_match('/[0-9]/', $password)) {
+        $strength += 1;
+    }
+    if (preg_match('/[!@#$%^&*(),.?":{}|<>]/', $password)) {
+        $strength += 1;
+    }
+
+    // Determine the strength level
+    switch ($strength) {
+        case 0:
+        case 1:
+        case 2:
+            return 'Weak';
+        case 3:
+        case 4:
+            return 'Good';
+        case 5:
+            return 'Strong';
+        default:
+            return 'Weak';
+    }
+}
+
 if(isset($_POST['profileUpdateBtn'])){
     $name = $_POST['name'];
     $phone = $_POST['phone'];
@@ -294,6 +330,14 @@ if(isset($_POST['profileUpdateBtn'])){
     $newPassword = $_POST['password'];
     $confirmPassword = $_POST['confirm_password'];
 
+    $passwordStrength = checkPasswordStrength($newPassword);
+        
+    if ($passwordStrength === 'Weak') {
+        $_SESSION['error'] = 'Password is too weak. Please choose a stronger password!';
+        header("Location: ../passwordpage.php?email=" . urlencode($email));
+        exit();
+    } 
+    
     if ($newPassword === $confirmPassword && $email) {
         // HASH THE NEW PASSWORD
         $hashed_password = password_hash($newPassword, PASSWORD_DEFAULT);

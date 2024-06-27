@@ -35,11 +35,11 @@ if(isset($_POST['addCateg_button'])){ // IF FORM SUBMIT IS FROM addCateg_button
     if($categ_query_run){
         move_uploaded_file($_FILES['image']['tmp_name'], $path.'/'.$filename); // MOVE THE UPLOADED IMAGE FILE FROM THE TEMPORARY DIRECTORY TO THE SPECIFIED UPLOAD DIRECTORY WITH GENERATED FILE NAME 
         $_SESSION['success'] = "✔ Category added successfully!";
-        header("Location: addCategory.php");
+        header("Location: category.php");
         exit();
     } else{
         $_SESSION['error'] = "Adding category failed!";
-        header("Location: addCategory.php");
+        header("Location: category.php");
         exit();
     }
 } else if(isset($_POST['editCateg_button'])){

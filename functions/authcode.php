@@ -42,7 +42,7 @@
                 return 'Weak';
             case 3:
             case 4:
-                return 'Medium';
+                return 'Good';
             case 5:
                 return 'Strong';
             default:
@@ -451,6 +451,13 @@
         $newPassword = $_POST['newPassword'];
         $confirmPassword = $_POST['confirmPassword'];
 
+        $passwordStrength = checkPasswordStrength($newPassword);
+        
+        if ($passwordStrength === 'Weak') {
+            $_SESSION['error'] = 'Password is too weak. Please choose a stronger password!';
+            header("Location: ../changePassword.php?email=" . urlencode($email));
+            exit();
+        } 
         // CHECK IF NEW PASSWORD MATCHES CONFIRM PASSWORD AND EMAIL EXISTS
         if ($newPassword === $confirmPassword && $email) {
             // HASH THE NEW PASSWORD

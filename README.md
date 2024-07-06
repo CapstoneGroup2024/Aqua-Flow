@@ -55,7 +55,7 @@ For installing Aqua Flow using XAMPP, you'll import the `aquaflowdb.sql` file in
    - Open a terminal in the project root directory.
    - Install PHPMailer dependency using Composer:
      ```bash
-     composer install
+     composer require phpmailer/phpmailer
      ```
 
 ## Usage

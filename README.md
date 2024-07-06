@@ -19,75 +19,44 @@ Aqua Flow is a solution for managing a water distribution business. This platfor
 - **Frontend**: HTML, CSS, JavaScript
 - **Backend**: PHP
 - **Database**: MySQL
+- **Server Environment**: XAMPP (includes Apache HTTP Server, MySQL database, PHP, phpMyAdmin)
 - **Frameworks**: 
   - **Frontend Framework**: Bootstrap
   - **Backend Framework**: Laravel
 - **Email Service**: PHPMailer
 - **Version Control**: Git
 
-## Installation
+For installing Aqua Flow using XAMPP, you'll import the `aquaflowdb.sql` file into your MySQL database. Here’s a simplified guide for installation:
 
-### Prerequisites
+### Installation Steps
 
-- Web server (e.g., Apache)
-- PHP (>= 7.4)
-- MySQL database
-- Composer
+#### Prerequisites
+- XAMPP installed (includes Apache, MySQL, PHP)
+- Composer installed (for PHP dependencies)
 
-### Steps
+#### Steps
 
 1. **Clone the Repository**
-
    ```bash
-   git clone https://github.com/yourusername/water-station-management.git
-   cd water-station-management
+   git clone https://github.com/CapstoneGroup2024/Aqua-Flow.git
+   cd Aqua-Flow
    ```
 
-2. **Install Dependencies**
+2. **Import Database**
+   - Start XAMPP and ensure Apache and MySQL are running.
+   - Open phpMyAdmin by visiting `http://localhost/phpmyadmin` in your browser.
+   - Create a new database named `aquaflowdb`.
+   - Import `aquaflowdb.sql` into the `aquaflowdb` database:
+     - Click on the `aquaflowdb` database in phpMyAdmin.
+     - Click on the `Import` tab.
+     - Choose the `aquaflowdb.sql` file and click `Go`.
 
-   ```bash
-   composer install
-   npm install
-   ```
-
-3. **Setup Environment Variables**
-
-   Rename `.env.example` to `.env` and configure your database settings, email server settings, and other environment variables.
-
-4. **Run Database Migrations**
-
-   ```bash
-   php artisan migrate
-   ```
-
-5. **Start the Server**
-
-   ```bash
-   php artisan serve
-   ```
-
-   Ensure your web server is running and navigate to `http://localhost:8000` in your browser.
-
-## Email Configuration
-
-1. **Install PHPMailer**
-
-   PHPMailer is included as a dependency in the composer.json file. Ensure it is installed by running `composer install`.
-
-2. **Configure Email Settings**
-
-   In the `.env` file, add your email server configuration:
-
-   ```env
-   MAIL_MAILER=smtp
-   MAIL_HOST=smtp.example.com
-   MAIL_PORT=587
-   MAIL_USERNAME=your_email@example.com
-   MAIL_PASSWORD=your_email_password
-   MAIL_ENCRYPTION=tls
-   MAIL_FROM_ADDRESS=your_email@example.com
-   MAIL_FROM_NAME="${APP_NAME}"
-   ```
+3. **Install Dependencies**
+   - Open a terminal in the project root directory.
+   - Install PHPMailer dependency using Composer:
+     ```bash
+     composer install
+     ```
 
 ## Usage
 
